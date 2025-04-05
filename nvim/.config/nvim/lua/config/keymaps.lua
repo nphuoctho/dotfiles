@@ -40,6 +40,20 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
+-- floating terminal
+keymap.set("n", "<leader>fT", function()
+  Snacks.terminal()
+end, { desc = "Terminal (cwd)" })
+keymap.set("n", "<leader>ft", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+keymap.set("n", "<c-/>", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+keymap.set("n", "<c-_>", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "which_key_ignore" })
+
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
