@@ -5,7 +5,6 @@ return {
     build = ":TSUpdate",
     opts = {
       ensure_installed = {
-        "astro",
         "bash",
         "c",
         "cpp",
@@ -18,9 +17,7 @@ return {
         "lua",
         "markdown",
         "markdown_inline",
-        "php",
         "python",
-        "rust",
         "scss",
         "toml",
         "tsx",
@@ -28,7 +25,6 @@ return {
         "vimdoc",
         "yaml",
         "sql",
-        "svelte",
       },
     },
     config = function(_, opts)

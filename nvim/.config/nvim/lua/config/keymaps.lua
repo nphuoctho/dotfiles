@@ -8,7 +8,7 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-local discipline = require("thorocd.discipline")
+local discipline = require("custom.discipline")
 discipline.cowboy()
 
 -- Increment/decrement
