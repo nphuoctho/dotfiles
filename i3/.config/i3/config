@@ -12,7 +12,8 @@ exec --no-startup-id dunst
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen 1
 exec --no-startup-id nm-applet
-exec --no-startup-id ~/.Xresource
+exec --no-startup-id ~/.Xresources
+exec --no-startup-id i3-autolayout autolayout
 
 # Gaps
 gaps inner 12
@@ -31,6 +32,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.local/bin/brightnesscontrol.sh i 5
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.local/bin/brightnesscontrol.sh d 5
 
+# Screenshot
+bindsym Print exec --no-startup-id ~/.config/rofi/applets/bin/screenshot.sh
+
 # Directional keys for focus, movement, and resize
 set $left h
 set $down j
@@ -42,9 +46,16 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # Keybindings
-bindsym $mod+t exec kitty
 bindsym $mod+q kill
-bindsym $mod+d exec --no-startup-id rofi -modi drun,run -show drun
+bindsym $mod+t exec kitty
+bindsym $mod+f exec firefox
+# bindsym $mod+e exec --no-startup-id spf
+
+# Custom app Rofi
+bindsym $mod+BackSpace exec ~/.config/rofi/powermenu/powermenu.sh 
+bindsym $mod+a exec ~/.config/rofi/launcher/launcher.sh
+bindsym $mod+m exec ~/.config/rofi/clipboard/launcher.sh
+bindsym $mod+w exec ~/.config/rofi/wifi/wifi.sh
 
 # Betterlockscreenc
 bindsym $mod+Shift+x exec betterlockscreen -l
@@ -70,16 +81,17 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # Container layout
-bindsym $mod+v split v
+# bindsym $mod+v split v
+# bindsym $mod+Shift+h split h
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
 bindsym $mod+Shift+f fullscreen toggle
 
 # Floating and focus toggles
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus parent
 
 # Scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -124,7 +136,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10, workspace $ws10
 # Configuration management
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to exit i3?' -B 'Yes' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to exit i3?' -B 'Yes' 'i3-msg exit'"
 
 # Resize mode
 mode "resize" {
@@ -145,5 +157,5 @@ bindsym $mod+r mode "resize"
 # Status bar
 bar {
     position top
-    status_command i3blocks
+    status_command i3status
 }
