@@ -19,7 +19,7 @@ window {
     location: center;
     anchor: center;
     fullscreen: false;
-    width: 300px;
+    width: 380px;
     x-offset: 0px;
     y-offset: 0px;
 
@@ -31,14 +31,12 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled: true;
-    spacing: 2px;
+    spacing: 4px;
     margin: 4px;
     padding: 2px;
     background-color: @background;
     children: [ "listview" ];
 }
-
-
 
 /*****----- Inputbar -----*****/
 inputbar {
@@ -69,7 +67,7 @@ listview {
     fixed-height: true;
     fixed-columns: true;
 
-    spacing: 4px;
+    spacing: 6px;
     padding: 4px;
     background-color: @background;
 }
@@ -77,7 +75,7 @@ listview {
 /*****----- Elements (Text Instead of Icons) -----*****/
 element {
     enabled: true;
-    padding: 10px;
+    padding: 12px;
     border-radius: 2px;
     background-color: #313244;
     text-color: #cdd6f4;
@@ -90,7 +88,8 @@ element selected.normal {
 }
 
 element-text {
-    font: "JetBrainsMono Nerd Font Mono 9";
+    font: "JetBrainsMono Nerd Font Mono 14";
+    font-weight: 600;
     background-color: transparent;
     text-color: inherit;
     cursor: inherit;
