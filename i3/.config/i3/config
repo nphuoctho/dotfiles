@@ -10,7 +10,7 @@ font pango:JetBrainsMonoNerdFont 12
 # Autostart
 exec --no-startup-id dunst
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen 1
+exec --no-startup-id xss-lock --transfer-sleep-lock --betterlockscreen 1
 exec --no-startup-id nm-applet
 exec --no-startup-id ~/.Xresources
 exec --no-startup-id i3-autolayout autolayout
@@ -52,7 +52,6 @@ tiling_drag modifier titlebar
 bindsym $mod+q kill
 bindsym $mod+t exec kitty
 bindsym $mod+f exec firefox
-# bindsym $mod+e exec --no-startup-id spf
 
 # Custom app Rofi
 bindsym $mod+BackSpace exec ~/.config/rofi/powermenu/powermenu.sh 
