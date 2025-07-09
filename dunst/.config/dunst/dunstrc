@@ -1,8 +1,8 @@
 [global]
     monitor = 0
     follow = none
-    width = 320
-    height = 120
+    width = 380
+    height = 140
     origin = top-right
     alignment = "left"
     vertical_alignment = "center"

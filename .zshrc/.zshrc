@@ -37,4 +37,3 @@ alias lg='lazygit'
 alias lq='lazysql'
 alias yz='yazi "$(zoxide query)"'
 
-
