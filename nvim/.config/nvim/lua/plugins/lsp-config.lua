@@ -10,6 +10,7 @@ return {
     opts = {
       ensure_installed = {
         "stylua", -- Formatter cho Lua
+        "lua-language-server",
         "shellcheck", -- Linter cho shell scripts
         "shfmt", -- Formatter cho shell scripts
         "flake8", -- Linter cho Python
@@ -116,10 +117,6 @@ return {
         lua = { "stylua" },
         -- Shell
         sh = { "shfmt" },
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
       },
     },
   },
