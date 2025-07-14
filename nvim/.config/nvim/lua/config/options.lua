@@ -1,58 +1,114 @@
-vim.g.mapleader = " "
+-- LazyNvim Options
 
-vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
+local opt = vim.opt
+local global = vim.g
 
-vim.opt.number = true
+-- Set leader keys
+global.mapleader = " "
+global.maplocalleader = "\\"
 
-vim.opt.title = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.hlsearch = true
-vim.opt.backup = false
-vim.opt.showcmd = true
-vim.opt.cmdheight = 1
-vim.opt.laststatus = 3
-vim.opt.expandtab = true
-vim.opt.scrolloff = 10
-vim.opt.shell = "fish"
-vim.opt.backupskip = { "/tmp/*", "/private/tmp/*" }
-vim.opt.inccommand = "split"
-vim.opt.ignorecase = true -- Case insensitive searching UNLESS /C or capital in search
-vim.opt.smarttab = true
-vim.opt.breakindent = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.wrap = false -- No Wrap lines
-vim.opt.backspace = { "start", "eol", "indent" }
-vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
-vim.opt.wildignore:append({ "*/node_modules/*" })
-vim.opt.splitbelow = true -- Put new windows below current
-vim.opt.splitright = true -- Put new windows right of current
-vim.opt.splitkeep = "cursor"
-vim.opt.mouse = ""
+-- General
+opt.autowrite = true -- Auto save before some actions
+opt.confirm = true -- Confirm before exiting with unsaved changes
+opt.mouse = "" -- Disable mouse mode
+opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
+opt.encoding = "utf-8"
+opt.fileencoding = "utf-8"
+opt.undofile = true
+opt.undolevels = 10000
 
--- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
+-- UI
+opt.number = true
+opt.relativenumber = true
+opt.cursorline = true
+opt.signcolumn = "yes"
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+opt.wrap = false
+opt.linebreak = true
+opt.laststatus = 3
+opt.cmdheight = 0
+opt.title = true
+opt.termguicolors = true
+opt.pumblend = 10
+opt.pumheight = 10
 
--- Add asterisks in block comments
-vim.opt.formatoptions:append({ "r" })
+opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
 
-vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
-vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
+-- Tabs & Indentation
+opt.expandtab = true
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.shiftround = true
+opt.smartindent = true
+opt.autoindent = true
+opt.smarttab = true
+opt.breakindent = true
 
-if vim.fn.has("nvim-0.8") == 1 then
-  vim.opt.cmdheight = 0
-end
+-- Search
+opt.ignorecase = true
+opt.smartcase = true
+opt.hlsearch = true
+opt.inccommand = "nosplit"
 
--- File types
+-- Completion
+opt.completeopt = "menu,menuone,noselect"
+opt.wildmode = "longest:full,full"
+opt.path:append({ "**" })
+opt.wildignore:append({ "*/node_modules/*" })
+
+-- Folding
+opt.foldlevel = 99
+opt.foldenable = true
+
+-- Grep
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --vimgrep"
+
+-- Behavior
+opt.backspace = { "start", "eol", "indent" }
+opt.scrolloff = 10
+opt.splitbelow = true
+opt.splitright = true
+opt.splitkeep = "screen"
+opt.jumpoptions = "view"
+opt.timeoutlen = vim.g.vscode and 1000 or 300
+opt.updatetime = 200
+opt.virtualedit = "block"
+opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
+
+-- Formatting
+opt.formatoptions = "jcroqlnt"
+opt.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()"
+opt.formatoptions:append("r")
+
+-- Markdown
+global.markdown_recommended_style = 0
+
+-- Filetype detection
 vim.filetype.add({
   extension = {
     mdx = "mdx",
   },
 })
 
-vim.g.lazyvim_prettier_needs_config = true
-vim.g.lazyvim_picker = "telescope"
-vim.g.lazyvim_cmp = "blink.cmp"
+vim.cmd([[
+  au BufNewFile,BufRead *.astro setf astro
+  au BufNewFile,BufRead Podfile setf ruby
+]])
+
+-- Shell
+opt.shell = "fish"
+
+-- Plugins integration (LazyNvim-specific variables)
+-- global.lazyvim_picker = "telescope"
+-- global.lazyvim_cmp = "blink.cmp"
+-- global.lazyvim_prettier_needs_config = true
+
