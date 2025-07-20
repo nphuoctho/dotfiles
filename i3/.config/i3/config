@@ -64,7 +64,10 @@ bindsym $mod+m exec ~/.config/rofi/clipboard/launcher.sh
 bindsym $mod+w exec ~/.config/rofi/wifi/wifi.sh
 
 # Betterlockscreenc
-bindsym $mod+Shift+x exec betterlockscreen -l
+# bindsym $mod+Shift+x exec betterlockscreen -l
+
+# I3lock
+bindsym $mod+Shift+x exec ~/.config/scripts/lock
 
 # Redshift
 bindsym $mod+Mod1+r exec ~/.config/redshift/toggle-redshift.sh

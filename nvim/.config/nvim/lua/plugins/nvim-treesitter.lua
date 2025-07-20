@@ -1,0 +1,40 @@
+return {
+  "nvim-treesitter/nvim-treesitter",
+  ---@module 'nvim-treesitter.configs'
+  ---@type TSConfig
+  ---@diagnostic disable-next-line: missing-fields
+  opts = {
+    ensure_installed = {
+      "bash",
+      "c",
+      "diff",
+      "html",
+      "javascript",
+      "jsdoc",
+      "json",
+      "jsonc",
+      "lua",
+      "luadoc",
+      "luap",
+      "markdown",
+      "markdown_inline",
+      "printf",
+      "python",
+      "query",
+      "regex",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "xml",
+      "yaml",
+      "dockerfile",
+      "php",
+      "nginx",
+      "vue",
+      "csv",
+      "css",
+    },
+  },
+}

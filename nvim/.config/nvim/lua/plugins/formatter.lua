@@ -1,45 +1,41 @@
+local util = require("conform.util")
+
 return {
   "stevearc/conform.nvim",
-  event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    local conform = require("conform")
-
-    conform.setup({
-      formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        vue = { "prettier" },
-        css = { "prettier" },
-        html = { "prettier" },
-        json = { "prettier" },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
-        lua = { "stylua" },
-        python = { "ruff_format" },
+  ---@module 'conform'
+  ---@type conform.setupOpts
+  opts = {
+    formatters_by_ft = {
+      javascript = { "prettier" },
+      typescript = { "prettier" },
+      javascriptreact = { "prettier" },
+      typescriptreact = { "prettier" },
+      vue = { "prettier" },
+      css = { "prettier" },
+      html = { "prettier" },
+      json = { "prettier" },
+      yaml = { "prettier" },
+      markdown = { "prettier" },
+      lua = { "stylua" },
+      python = { "ruff_format" },
+      php = { "pint" },
+    },
+    -- Custom formatter for ruff
+    formatters = {
+      ruff_format = {
+        command = "ruff",
+        args = { "format", "--stdin-filename", "$FILENAME", "-" },
+        stdin = true,
       },
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      },
-      -- Custom formatter for ruff
-      formatters = {
-        ruff_format = {
-          command = "ruff",
-          args = { "format", "--stdin-filename", "$FILENAME", "-" },
-          stdin = true,
+      pint = {
+        command = "pint",
+        args = { "$FILENAME" },
+        stdin = false,
+        cwd = util.root_file({ "pint.json", "composer.json" }),
+        env = {
+          PATH = os.getenv("HOME") .. "/.config/composer/vendor/bin:" .. os.getenv("PATH"),
         },
       },
-    })
-
-    vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-      conform.format({
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      })
-    end, { desc = "Format file or range (in visual mode)" })
-  end,
+    },
+  },
 }

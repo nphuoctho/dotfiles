@@ -4,7 +4,7 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "<leader>l", ":Lazy<Return>")
+keymap.set("n", "<leader>le", ":LazyExtras<Return>")
 
 -- Increment/decrement
 keymap.set("n", "+", "<C-a>")
