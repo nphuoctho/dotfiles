@@ -4,7 +4,7 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "<leader>le", ":LazyExtras<Return>")
+keymap.set("n", "<leader>le", "<cmd>LazyExtras<CR>")
 
 -- Increment/decrement
 keymap.set("n", "+", "<C-a>")
@@ -25,8 +25,8 @@ keymap.set("n", "<C-m>", "<C-i>", opts)
 -- keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 
 -- Split window
-keymap.set("n", "ss", ":split<Return>", opts)
-keymap.set("n", "sv", ":vsplit<Return>", opts)
+keymap.set("n", "ss", "<cmd>split<CR>", opts)
+keymap.set("n", "sv", "<cmd>vsplit<CR>", opts)
 
 -- Move window
 keymap.set("n", "sh", "<C-w>h")
