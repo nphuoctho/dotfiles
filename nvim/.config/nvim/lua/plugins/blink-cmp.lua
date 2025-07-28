@@ -4,10 +4,10 @@ return {
   ---@type blink.cmp.Config
   opts = {
     completion = {
-      menu = { border = "rounded" },
+      menu = { border = "rounded", winblend = vim.o.pumblend },
       documentation = { window = { border = "rounded" } },
     },
-    signature = { window = { border = "rounded" } },
+    signature = { window = { border = "rounded" }, winblend = vim.o.pumblend },
     keymap = {
       ["<C-k>"] = { "select_prev", "fallback" },
       ["<C-j>"] = { "select_next", "fallback" },

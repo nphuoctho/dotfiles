@@ -17,10 +17,30 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    {
+      "LazyVim/LazyVim",
+      import = "lazyvim.plugins",
+      opts = {
+        colorscheme = "catppuccin-mocha",
+        news = {
+          lazyvim = true,
+          neovim = true,
+        },
+      },
+    },
+    -- import any extras modules here
+    { import = "lazyvim.plugins.extras.ai.copilot" },
+    { import = "lazyvim.plugins.extras.dap.core" },
+    { import = "lazyvim.plugins.extras.dap.nlua" },
+    { import = "lazyvim.plugins.extras.lang.python" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
+    { import = "lazyvim.plugins.extras.lang.python" },
+    { import = "lazyvim.plugins.extras.lang.tailwind" },
+    { import = "lazyvim.plugins.extras.lang.docker" },
     -- import/override with your plugins
     { import = "plugins" },
   },
+
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
@@ -35,6 +55,9 @@ require("lazy").setup({
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
   performance = {
+    cache = {
+      enabled = true,
+    },
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
@@ -46,7 +69,16 @@ require("lazy").setup({
         "tohtml",
         "tutor",
         "zipPlugin",
+        "mini.ai",
       },
     },
   },
+  ui = {
+    custom_keys = {
+      ["<localleader>d"] = function(plugin)
+        dd(plugin)
+      end,
+    },
+  },
+  debug = false,
 })

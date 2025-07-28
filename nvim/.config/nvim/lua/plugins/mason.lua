@@ -1,7 +1,6 @@
 return {
   "mason-org/mason-lspconfig.nvim",
   dependencies = {
-    "neovim/nvim-lspconfig",
     {
       "mason-org/mason.nvim",
       cmd = "Mason",
@@ -9,25 +8,25 @@ return {
       keys = {
         { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" },
       },
-      ---@module 'mason'
-      ---@type MasonSettings
-      opts = {
-        ui = {
+      opts = function(_, opts)
+        opts.ui = {
           icons = {
             package_installed = "✓",
             package_pending = "➜",
             package_uninstalled = "✗",
           },
-        },
-        ensure_installed = {
+        }
+
+        vim.list_extend(opts.ensure_installed, {
           "stylua",
           "prettier",
           "eslint_d",
           "ruff", -- Python linter and formatter
           "phpcs",
           "php-cs-fixer",
-        },
-      },
+          "debugpy",
+        })
+      end,
     },
   },
   ---@module 'mason-lspconfig'
