@@ -58,6 +58,7 @@ bindsym $mod+q kill
 bindsym $mod+t exec kitty
 bindsym $mod+f exec firefox
 bindsym $mod+e exec dolphin
+bindsym $mod+c exec code
 
 # Custom app Rofi
 bindsym $mod+BackSpace exec ~/.config/rofi/powermenu/powermenu.sh 
