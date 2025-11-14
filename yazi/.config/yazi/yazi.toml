@@ -58,3 +58,12 @@ run = "ouch"
 run = 'ouch d -y "$@"'
 desc = "Extract here with ouch"
 for = "unix"
+
+# [[openre.pdf]]
+# run = 'zathura "$@"'
+# block = false
+# for = 'unix'
+#
+# [[open.rules]]
+# name = "*.pdf"
+# use = "pdf"

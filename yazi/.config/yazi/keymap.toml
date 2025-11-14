@@ -52,7 +52,7 @@ on = ["R", "r"]
 run = "plugin recycle-bin restore"
 desc = "Restore from Trash"
 
-# Compress 
+# Compress
 [[mgr.prepend_keymap]]
 on = ["c", "a", "a"]
 run = "plugin compress"
@@ -80,7 +80,7 @@ desc = "Archive selected files (password+header+level)"
 
 # What size
 [[mgr.prepend_keymap]]
-on = [".", "s"]
+on = ["c", "s"]
 run = "plugin what-size"
 desc = "Calc size of selection or cwd"
 
