@@ -26,6 +26,7 @@ vim.g.have_nerd_font = true
 require 'core.options'
 require 'core.keymaps'
 require 'core.autocmds'
+require 'core.highlight'
 
 --- Load plugins
 require('lazy').setup({
@@ -58,11 +59,9 @@ require('lazy').setup({
     --  Here are some example plugins that I've included in the Kickstart repository.
     --  Uncomment any of the lines below to enable them (you will need to restart nvim).
     --
-    -- require 'kickstart.plugins.debug',
     -- require 'kickstart.plugins.lint',
-    require 'kickstart.plugins.indent_line',
+    require 'kickstart.plugins.debug',
     require 'kickstart.plugins.neo-tree',
-    require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   },
 
   -- automatically check for plugin updates

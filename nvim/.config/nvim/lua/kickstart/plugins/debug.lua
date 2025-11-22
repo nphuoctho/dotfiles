@@ -23,58 +23,108 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   keys = {
-    -- Basic debugging keymaps, feel free to change to your liking!
+    -- Start / Continue
     {
-      '<F5>',
+      '<leader>xc',
       function()
         require('dap').continue()
       end,
       desc = 'Debug: Start/Continue',
     },
+
+    -- Step actions
     {
-      '<F1>',
+      '<leader>xi',
       function()
         require('dap').step_into()
       end,
       desc = 'Debug: Step Into',
     },
     {
-      '<F2>',
+      '<leader>xo',
       function()
         require('dap').step_over()
       end,
       desc = 'Debug: Step Over',
     },
     {
-      '<F3>',
+      '<leader>xO',
       function()
         require('dap').step_out()
       end,
       desc = 'Debug: Step Out',
     },
+
+    -- Breakpoints
     {
-      '<leader>b',
+      '<leader>xb',
       function()
         require('dap').toggle_breakpoint()
       end,
       desc = 'Debug: Toggle Breakpoint',
     },
     {
-      '<leader>B',
+      '<leader>xB',
       function()
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end,
-      desc = 'Debug: Set Breakpoint',
+      desc = 'Debug: Conditional Breakpoint',
     },
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+
+    -- Restart
     {
-      '<F7>',
+      '<leader>xr',
+      function()
+        require('dap').restart()
+      end,
+      desc = 'Debug: Restart',
+    },
+
+    -- Stop session
+    {
+      '<leader>xq',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Quit/Terminate',
+    },
+
+    -- DAP UI toggle
+    {
+      '<leader>xt',
       function()
         require('dapui').toggle()
       end,
-      desc = 'Debug: See last session result.',
+      desc = 'Debug: Toggle DAP UI',
+    },
+
+    -- Hover variable / widgets
+    {
+      '<leader>xh',
+      function()
+        require('dap.ui.widgets').hover()
+      end,
+      desc = 'Debug: Hover Variables',
+    },
+    {
+      '<leader>xs',
+      function()
+        local widgets = require 'dap.ui.widgets'
+        widgets.sidebar(widgets.scopes).toggle()
+      end,
+      desc = 'Debug: Show Scopes',
+    },
+
+    -- Evaluate expression
+    {
+      '<leader>xe',
+      function()
+        require('dap.ui.widgets').preview()
+      end,
+      desc = 'Debug: Eval Expression',
     },
   },
   config = function()
@@ -95,6 +145,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'debugpy',
       },
     }
 
@@ -144,5 +195,7 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    require('dap-python').setup {}
   end,
 }

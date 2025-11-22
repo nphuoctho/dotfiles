@@ -20,6 +20,8 @@ return { -- Highlight, edit, and navigate code
       'query',
       'vim',
       'vimdoc',
+      'python',
+      'cpp',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,

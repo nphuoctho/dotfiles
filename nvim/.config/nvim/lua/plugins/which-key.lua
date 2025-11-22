@@ -45,10 +45,13 @@ return { -- Useful plugin to show you pending keybinds.
 
     -- Document existing key chains
     spec = {
-      { '<leader>s', group = '[S]earch' },
-      { '<leader>t', group = '[T]oggle' },
+      { '<leader>l', group = 'Lazy', icon = '󰒲 ' },
+      { '<leader>s', group = '[S]earch', icon = ' ' },
+      { '<leader>t', group = '[T]oggle', icon = ' ' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-      { '<leader>b', group = '[B]uffer' },
+      { '<leader>b', group = '[B]uffer', icon = '󰓩 ' },
+      { '<leader>w', group = '[W]indow', icon = ' ' },
+      { '<leader>x', group = '[D]ebug', icon = ' ' },
     },
   },
 }
