@@ -196,6 +196,11 @@ return {
       },
     }
 
-    require('dap-python').setup {}
+    local venv = vim.fn.getcwd() .. '/.venv/bin/python'
+    if vim.fn.filereadable(venv) == 1 then
+      require('dap-python').setup(venv)
+    else
+      require('dap-python').setup 'python'
+    end
   end,
 }
