@@ -43,26 +43,26 @@ return { -- Autoformat
       markdown = { 'prettierd' },
     },
     -- Formatter
-    formatters = {
-      ruff_format = {
-        command = 'ruff',
-        args = { 'format', '-' },
-        stdin = true,
-      },
-
-      ruff_fix = {
-        command = 'ruff',
-        args = {
-          'check',
-          '--fix',
-          -- '--extend-select',
-          -- 'I', -- <— isort rules
-          '--stdin-filename',
-          '$FILENAME',
-          '-',
-        },
-        stdin = true,
-      },
-    },
+    -- formatters = {
+    --   ruff_format = {
+    --     command = 'ruff',
+    --     args = { 'format', '-' },
+    --     stdin = true,
+    --   },
+    --
+    --   ruff_fix = {
+    --     command = 'ruff',
+    --     args = {
+    --       'check',
+    --       '--fix',
+    --       -- '--extend-select',
+    --       -- 'I', -- <— isort rules
+    --       '--stdin-filename',
+    --       '$FILENAME',
+    --       '-',
+    --     },
+    --     stdin = true,
+    --   },
+    -- },
   },
 }

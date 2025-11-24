@@ -212,18 +212,47 @@ return {
         -- Python
         pyright = {
           settings = {
-            pyright = {
+            python = {
               analysis = {
-                typeCheckingMode = 'basic', -- "off" / "basic" / "strict"
+                typeCheckingMode = 'off', -- "off" / "basic" / "strict"
                 autoSearchPaths = true,
-                autoImportCompletions = true,
                 useLibraryCodeForTypes = true,
-                diagnosticMode = 'openFilesOnly',
 
-                -- Tránh conflict với Ruff
-                reportUnusedImport = 'none',
-                reportUnusedVariable = 'none',
-                reportInconsistentIndentation = 'none',
+                -- Tắt các dạng diagnostics mà Ruff làm rồi
+                diagnosticMode = 'off',
+                diagnosticSeverityOverrides = {
+                  reportUnusedVariable = 'warning',
+                  reportUnusedImport = 'none',
+                  reportGeneralTypeIssues = 'none',
+                },
+              },
+            },
+          },
+          on_attach = function(client)
+            -- Keep hover from Pyright
+            client.server_capabilities.hoverProvider = true
+          end,
+        },
+
+        ruff = {
+          on_attach = function(client)
+            -- Tắt hover của Ruff để không conflict với Pyright
+            client.server_capabilities.hoverProvider = false
+          end,
+          init_options = {
+            settings = {
+              lint = {
+                enabled = false,
+              },
+              args = {
+                '--ignore',
+                'F821',
+                '--ignore',
+                'E402',
+                '--ignore',
+                'E722',
+                '--ignore',
+                'E712',
               },
             },
           },
@@ -293,6 +322,25 @@ return {
           end,
         },
       }
+
+      -- Border Style window LSP
+      local windows = require 'lspconfig.ui.windows'
+      windows.default_options.border = 'rounded'
+
+      -- Custom Hover
+      vim.lsp.handlers['textDocument/hover'] = function(_, result, _, conf)
+        conf = conf or {}
+        conf.border = 'rounded'
+        conf.max_width = 70
+        return vim.lsp.util.open_floating_preview(result.contents, 'markdown', conf)
+      end
+
+      -- Custom SignatureHelp
+      vim.lsp.handlers['textDocument/signatureHelp'] = function(_, result, _, conf)
+        conf = conf or {}
+        conf.border = 'rounded'
+        return vim.lsp.util.open_floating_preview(result.contents, 'markdown', conf)
+      end
     end,
   },
 }

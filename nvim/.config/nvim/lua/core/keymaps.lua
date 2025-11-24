@@ -67,6 +67,13 @@ map('n', '<leader>bc', '<CMD>bdelete<CR>', { desc = 'Close current buffer' })
 -- Helper keymap
 map('n', '<S-k>', vim.lsp.buf.hover, { desc = 'LSP hover' })
 map('i', 'jk', '<esc>', { desc = 'Exit insert mode' })
+map('n', '<leader>od', function()
+  vim.diagnostic.open_float(nil, {
+    border = 'rounded',
+    focusable = false,
+    max_width = 80,
+  })
+end, { desc = 'Show diagnostic hover' })
 
 -- Quicker save
 map('n', '<C-s>', ':w<CR>', { desc = 'Save current file' })
