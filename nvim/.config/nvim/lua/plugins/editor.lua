@@ -25,14 +25,14 @@ return {
   -- Venv Selector
   {
     'linux-cultist/venv-selector.nvim',
+    event = 'VeryLazy',
     opts = {
       options = {
         notify_user_on_venv_activation = true,
       },
     },
-    ft = 'python',
     keys = {
-      { ',vs', '<cmd>VenvSelect<cr>', desc = 'Select VirtualEnv', ft = 'python' },
+      { ',vs', '<cmd>VenvSelect<cr>', desc = 'Select VirtualEnv' },
     },
   },
 

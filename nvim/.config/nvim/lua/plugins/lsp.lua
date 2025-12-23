@@ -210,61 +210,73 @@ return {
       local servers = {
         -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
         -- Python
-        pyright = {
-          settings = {
-            python = {
-              analysis = {
-                typeCheckingMode = 'off', -- "off" / "basic" / "strict"
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
+        -- pyright = {
+        --   settings = {
+        --     python = {
+        --       analysis = {
+        --         typeCheckingMode = 'basic', -- "off" / "basic" / "strict"
+        --         autoSearchPaths = true,
+        --         useLibraryCodeForTypes = true,
+        --
+        --         -- Tắt các dạng diagnostics mà Ruff làm rồi
+        --         diagnosticMode = 'off',
+        --         diagnosticSeverityOverrides = {
+        --           reportUnusedVariable = 'warning',
+        --           reportUnusedImport = 'none',
+        --           reportGeneralTypeIssues = 'none',
+        --         },
+        --       },
+        --     },
+        --   },
+        --   on_attach = function(client)
+        --     -- Keep hover from Pyright
+        --     client.server_capabilities.hoverProvider = true
+        --   end,
+        -- },
 
-                -- Tắt các dạng diagnostics mà Ruff làm rồi
-                diagnosticMode = 'off',
-                diagnosticSeverityOverrides = {
-                  reportUnusedVariable = 'warning',
-                  reportUnusedImport = 'none',
-                  reportGeneralTypeIssues = 'none',
-                },
-              },
-            },
-          },
-          on_attach = function(client)
-            -- Keep hover from Pyright
-            client.server_capabilities.hoverProvider = true
-          end,
-        },
-
-        ruff = {
-          on_attach = function(client)
-            -- Tắt hover của Ruff để không conflict với Pyright
-            client.server_capabilities.hoverProvider = false
-          end,
-          init_options = {
-            settings = {
-              lint = {
-                enabled = false,
-              },
-              args = {
-                '--ignore',
-                'F821',
-                '--ignore',
-                'E402',
-                '--ignore',
-                'E722',
-                '--ignore',
-                'E712',
-              },
-            },
-          },
-        },
+        -- ruff = {
+        --   on_attach = function(client)
+        --     -- Tắt hover của Ruff để không conflict với Pyright
+        --     client.server_capabilities.hoverProvider = false
+        --   end,
+        --   init_options = {
+        --     settings = {
+        --       lint = {
+        --         enabled = false,
+        --       },
+        --       args = {
+        --         '--ignore',
+        --         'F821',
+        --         '--ignore',
+        --         'E402',
+        --         '--ignore',
+        --         'E722',
+        --         '--ignore',
+        --         'E712',
+        --       },
+        --     },
+        --   },
+        -- },
 
         -- Web Dev
         html = {},
         cssls = {},
         jsonls = {},
+        tailwindcss = {},
+        emmet_language_server = {
+          filetypes = {
+            'html',
+            'css',
+            'javascriptreact',
+            'typescriptreact',
+            'vue',
+            'svelte',
+          },
+        },
+
+        -- Docker
         yamlls = {},
         dockerls = {},
-        tailwindcss = {},
 
         -- Lua
         lua_ls = {
@@ -302,9 +314,6 @@ return {
 
         'prettierd',
         'eslint_d',
-
-        'ruff',
-        'debugpy',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

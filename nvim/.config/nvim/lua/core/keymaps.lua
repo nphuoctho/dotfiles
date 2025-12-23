@@ -83,3 +83,7 @@ map('i', '<C-s>', '<ESC>:w<CR>', { desc = 'Save current file' })
 map('i', '<esc>', '<nop>')
 map('n', '<C-a>', '<nop>')
 map('n', '<C-x>', '<nop>')
+
+map('i', '<C-e>', function()
+  require('custom.emmet').expand()
+end, { desc = 'Emmet expand' })

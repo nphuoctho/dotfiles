@@ -29,10 +29,6 @@ return { -- Autoformat
       end
     end,
     formatters_by_ft = {
-      lua = { 'stylua' },
-
-      python = { 'ruff_format', 'ruff_fix' },
-
       javascript = { 'prettierd', 'eslint_d' },
       javascriptreact = { 'prettierd', 'eslint_d' },
       typescript = { 'prettierd', 'eslint_d' },
@@ -41,6 +37,8 @@ return { -- Autoformat
       json = { 'prettierd' },
       yaml = { 'prettierd' },
       markdown = { 'prettierd' },
+
+      lua = { 'stylua' },
     },
     -- Formatter
     -- formatters = {

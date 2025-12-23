@@ -13,6 +13,7 @@ return { -- Highlight, edit, and navigate code
       'javascript',
       'typescript',
       'tsx',
+      'json',
       'lua',
       'luadoc',
       'markdown',

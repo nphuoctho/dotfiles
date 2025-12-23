@@ -1,58 +1,108 @@
-# Zomm Image
-[[mgr.prepend_keymap]]
-on = "+"
-run = "plugin zoom 1"
-desc = "Zoom in hovered file"
+# =============================================================================
+# Yazi keymaps (custom)
+# - This file only contains your extra key bindings.
+# - Using `mgr.prepend_keymap` means these are added before defaults.
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# View / UI
+# -----------------------------------------------------------------------------
+
+# Zoom image preview
+# [[mgr.prepend_keymap]]
+# on = "+"
+# run = "plugin zoom 1"
+# desc = "Zoom in hovered file"
+
+# [[mgr.prepend_keymap]]
+# on = "-"
+# run = "plugin zoom -1"
+# desc = "Zoom out hovered file"
+
+
+# -----------------------------------------------------------------------------
+# Goto / Quick folder jumps
+# -----------------------------------------------------------------------------
 
 [[mgr.prepend_keymap]]
-on = "-"
-run = "plugin zoom -1"
-desc = "Zoom out hovered file"
+on = ["g", "d"]
+run = "cd ~/Downloads"
+desc = "Go ~/Downloads"
 
-# lazygit
+[[mgr.prepend_keymap]]
+on = ["g", "D"]
+run = "cd ~/Documents"
+desc = "Go ~/Documents"
+
+[[mgr.prepend_keymap]]
+on = ["g", "p"]
+run = "cd ~/Pictures"
+desc = "Go ~/Pictures"
+
+[[mgr.prepend_keymap]]
+on = ["g", "h"]
+run = "cd ~"
+desc = "Go home"
+
+
+# -----------------------------------------------------------------------------
+# Git
+# -----------------------------------------------------------------------------
+
+# Open lazygit (Git TUI) in current directory
 [[mgr.prepend_keymap]]
 on = ["g", "i"]
 run = "plugin lazygit"
 desc = "run lazygit"
 
-# Recycle
-## Go to Trash  directory
+
+# -----------------------------------------------------------------------------
+# Trash / Recycle Bin
+# -----------------------------------------------------------------------------
+
+# Go to Trash directory
 [[mgr.prepend_keymap]]
 on = ["g", "t"]
 run = "plugin recycle-bin open"
 desc = "Go to Trash"
 
-## Open the trash
+# Open Trash (same as `gt`, kept for convenience)
 [[mgr.prepend_keymap]]
 on = ["R", "o"]
 run = "plugin recycle-bin open"
 desc = "Open Trash"
 
-## Empty the trash
+# Empty the entire Trash
 [[mgr.prepend_keymap]]
 on = ["R", "e"]
 run = "plugin recycle-bin empty"
 desc = "Empty Trash"
 
-## Delete selected items from trash
+# Permanently delete selected items from Trash
 [[mgr.prepend_keymap]]
 on = ["R", "d"]
 run = "plugin recycle-bin delete"
 desc = "Delete from Trash"
 
-## Empty trash by days since deleted
+# Empty Trash items older than N days
 [[mgr.prepend_keymap]]
 on = ["R", "D"]
 run = "plugin recycle-bin emptyDays"
 desc = "Empty by days deleted"
 
-## Restore selected items from trash
+# Restore selected items from Trash to their original location
 [[mgr.prepend_keymap]]
 on = ["R", "r"]
 run = "plugin recycle-bin restore"
 desc = "Restore from Trash"
 
-# Compress
+
+# -----------------------------------------------------------------------------
+# Archive / Compression
+# -----------------------------------------------------------------------------
+
+# Compress selected files (interactive)
 [[mgr.prepend_keymap]]
 on = ["c", "a", "a"]
 run = "plugin compress"
@@ -78,7 +128,12 @@ on = ["c", "a", "u"]
 run = "plugin compress -phl"
 desc = "Archive selected files (password+header+level)"
 
-# What size
+
+# -----------------------------------------------------------------------------
+# Utilities
+# -----------------------------------------------------------------------------
+
+# Calculate size of selection or cwd
 [[mgr.prepend_keymap]]
 on = ["c", "s"]
 run = "plugin what-size"
@@ -90,13 +145,14 @@ desc = "Calc size of selection or cwd"
 # run  = "plugin what-size -- '--clipboard'"
 # desc = "Calc size of selection or cwd"
 
-# Chmod
+# Change permissions (chmod) for selected files
 [[mgr.prepend_keymap]]
 on = ["c", "m"]
 run = "plugin chmod"
 desc = "Chmod on selected files"
 
-# Ouch
+
+# Compress with `ouch` plugin (alternative archive workflow)
 [[mgr.prepend_keymap]]
 on = ["C"]
 run = "plugin ouch"

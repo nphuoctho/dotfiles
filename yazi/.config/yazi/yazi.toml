@@ -1,3 +1,10 @@
+# =========================
+# Plugins
+# =========================
+
+# -- Fetchers ---------------------------------------------------------------
+# Adds extra metadata while listing files.
+# `git` fetcher adds git status decorations.
 [[plugin.prepend_fetchers]]
 id = "git"
 name = "*"
@@ -8,7 +15,8 @@ id = "git"
 name = "*/"
 run = "git"
 
-# Archive previewer
+# -- Previewers -------------------------------------------------------------
+# Archive preview uses `ouch` (list / preview contents in the preview pane).
 [[plugin.prepend_previewers]]
 mime = "application/*zip"
 run = "ouch"
@@ -53,17 +61,52 @@ run = "ouch"
 mime = "application/java-archive"
 run = "ouch"
 
-# Ouch extract
+
+# =========================
+# Openers ("what to run")
+# =========================
+
+# Extract hovered archive into current directory.
+# Note: this requires `ouch` to be installed.
 [[opener.extract]]
 run = 'ouch d -y "$@"'
 desc = "Extract here with ouch"
 for = "unix"
 
-# [[openre.pdf]]
-# run = 'zathura "$@"'
-# block = false
-# for = 'unix'
-#
-# [[open.rules]]
-# name = "*.pdf"
-# use = "pdf"
+[opener]
+# Open PDF with zathura.
+pdff = [
+    { run = 'zathura "$@"', desc = "zathura", block = true, for = "unix" },
+]
+
+
+# =========================
+# Open rules ("which opener")
+# =========================
+
+# IMPORTANT:
+# Setting `[open].rules` replaces Yazi defaults.
+# So if you define rules here, include all behaviors you care about.
+[open]
+rules = [
+    # Archives: press Enter to extract here.
+    # - Keep a MIME rule (for when mime-detection works)
+    # - Keep glob rules (fallback when MIME is missing/incorrect)
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = "extract" },
+
+    { name = "*.zip", use = "extract" },
+    { name = "*.rar", use = "extract" },
+    { name = "*.7z", use = "extract" },
+    { name = "*.tar", use = "extract" },
+    { name = "*.tgz", use = "extract" },
+    { name = "*.tar.gz", use = "extract" },
+    { name = "*.tar.xz", use = "extract" },
+    { name = "*.tar.zst", use = "extract" },
+    { name = "*.gz", use = "extract" },
+    { name = "*.xz", use = "extract" },
+    { name = "*.zst", use = "extract" },
+    { name = "*.bz2", use = "extract" },
+
+    # Documents
+    { name = "*.pdf", use = "pdff" },
+]
