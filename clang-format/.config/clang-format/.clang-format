@@ -1,0 +1,21 @@
+BasedOnStyle: LLVM
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+
+ColumnLimit: 100
+BreakBeforeBraces: Attach
+AllowShortIfStatementsOnASingleLine: false
+
+PointerAlignment: Left
+DerivePointerAlignment: false
+
+SpaceBeforeParens: ControlStatements
+SortIncludes: true
+
+Cpp11BracedListStyle: true
+AlwaysBreakTemplateDeclarations: Yes
+
+AllowShortFunctionsOnASingleLine: None
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never

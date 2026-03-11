@@ -209,54 +209,14 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        -- Python
-        -- pyright = {
-        --   settings = {
-        --     python = {
-        --       analysis = {
-        --         typeCheckingMode = 'basic', -- "off" / "basic" / "strict"
-        --         autoSearchPaths = true,
-        --         useLibraryCodeForTypes = true,
-        --
-        --         -- Tắt các dạng diagnostics mà Ruff làm rồi
-        --         diagnosticMode = 'off',
-        --         diagnosticSeverityOverrides = {
-        --           reportUnusedVariable = 'warning',
-        --           reportUnusedImport = 'none',
-        --           reportGeneralTypeIssues = 'none',
-        --         },
-        --       },
-        --     },
-        --   },
-        --   on_attach = function(client)
-        --     -- Keep hover from Pyright
-        --     client.server_capabilities.hoverProvider = true
-        --   end,
-        -- },
-
-        -- ruff = {
-        --   on_attach = function(client)
-        --     -- Tắt hover của Ruff để không conflict với Pyright
-        --     client.server_capabilities.hoverProvider = false
-        --   end,
-        --   init_options = {
-        --     settings = {
-        --       lint = {
-        --         enabled = false,
-        --       },
-        --       args = {
-        --         '--ignore',
-        --         'F821',
-        --         '--ignore',
-        --         'E402',
-        --         '--ignore',
-        --         'E722',
-        --         '--ignore',
-        --         'E712',
-        --       },
-        --     },
-        --   },
-        -- },
+        -- Ruby
+        solargraph = {
+          settings = {
+            diagnostics = true,
+            completion = true,
+            useBundler = true,
+          },
+        },
 
         -- Web Dev
         html = {},

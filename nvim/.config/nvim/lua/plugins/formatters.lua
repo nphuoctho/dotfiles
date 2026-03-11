@@ -39,6 +39,8 @@ return { -- Autoformat
       markdown = { 'prettierd' },
 
       lua = { 'stylua' },
+
+      ruby = { 'robocop' },
     },
     -- Formatter
     -- formatters = {
