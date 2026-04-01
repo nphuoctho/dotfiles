@@ -97,8 +97,15 @@ return { -- Fuzzy Finder (files, lsp, etc)
     end, { desc = '[S]earch [/] in Open Files' })
 
     -- Shortcut for searching your Neovim configuration files
+    -- Shortcut for searching your Neovim configuration files
     vim.keymap.set('n', '<leader>sn', function()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end, { desc = '[S]earch [N]eovim files' })
+
+    -- ── Leader shortcuts theo spec ──────────────────────────────────────
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find by Grep' })
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffers' })
+    vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, { desc = 'Find LSP Symbols' })
   end,
 }

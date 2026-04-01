@@ -37,6 +37,9 @@ return { -- Autoformat
       json = { 'prettierd' },
       yaml = { 'prettierd' },
       markdown = { 'prettierd' },
+      python = { 'ruff_format', 'ruff' },
+      c = { 'clang_format' },
+      cpp = { 'clang_format' },
 
       lua = { 'stylua' },
     },

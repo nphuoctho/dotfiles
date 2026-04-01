@@ -7,6 +7,7 @@ return { -- Highlight, edit, and navigate code
     ensure_installed = {
       'bash',
       'c',
+      'cpp',
       'diff',
       'html',
       'css',
@@ -14,6 +15,7 @@ return { -- Highlight, edit, and navigate code
       'typescript',
       'tsx',
       'json',
+      'yaml',
       'lua',
       'luadoc',
       'markdown',
@@ -22,7 +24,6 @@ return { -- Highlight, edit, and navigate code
       'vim',
       'vimdoc',
       'python',
-      'cpp',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,
@@ -34,6 +35,16 @@ return { -- Highlight, edit, and navigate code
       additional_vim_regex_highlighting = { 'ruby' },
     },
     indent = { enable = true, disable = { 'ruby' } },
+    -- Incremental selection: expand/shrink selections using Treesitter nodes
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = '<C-space>', -- start selection at cursor node
+        node_incremental = '<C-space>', -- expand to next node
+        scope_incremental = false, -- disabled (conflicts with other maps)
+        node_decremental = '<bs>', -- shrink selection
+      },
+    },
   },
   -- There are additional nvim-treesitter modules that you can use to interact
   -- with nvim-treesitter. You should go explore a few and see what interests you:

@@ -42,8 +42,11 @@ require('lazy').setup({
       config = function()
         ---@diagnostic disable-next-line: missing-fields
         require('tokyonight').setup {
+          transparent = false, -- set to true to enable transparent background
           styles = {
             comments = { italic = false }, -- Disable italics in comments
+            sidebars = 'dark',
+            floats = 'dark',
           },
         }
 
@@ -70,17 +73,17 @@ require('lazy').setup({
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
-      config = ' ',
+      config = ' ',
       event = '📅',
       ft = '📂',
-      init = ' ',
-      keys = ' ',
+      init = ' ',
+      keys = ' ',
       plugin = '🔌',
-      runtime = ' ',
-      require = ' ',
-      source = ' ',
-      start = ' ',
-      task = ' ',
+      runtime = ' ',
+      require = ' ',
+      source = ' ',
+      start = ' ',
+      task = ' ',
       lazy = '󰒲 ',
     },
   },

@@ -21,32 +21,36 @@ return {
           vim.keymap.set(mode, l, r, opts)
         end
 
-        -- Navigation
-        map('n', ']c', function()
+        -- Navigation: ]c / [c (original) + ]h / [h (spec aliases)
+        local function next_hunk()
           if vim.wo.diff then
             vim.cmd.normal { ']c', bang = true }
           else
             gitsigns.nav_hunk 'next'
           end
-        end, { desc = 'Jump to next git [c]hange' })
-
-        map('n', '[c', function()
+        end
+        local function prev_hunk()
           if vim.wo.diff then
             vim.cmd.normal { '[c', bang = true }
           else
             gitsigns.nav_hunk 'prev'
           end
-        end, { desc = 'Jump to previous git [c]hange' })
+        end
 
-        -- Actions
-        -- visual mode
+        map('n', ']c', next_hunk, { desc = 'Jump to next git [c]hange' })
+        map('n', '[c', prev_hunk, { desc = 'Jump to previous git [c]hange' })
+        map('n', ']h', next_hunk, { desc = 'Next git hunk' })
+        map('n', '[h', prev_hunk, { desc = 'Prev git hunk' })
+
+        -- Actions — visual mode
         map('v', '<leader>hs', function()
           gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
         end, { desc = 'git [s]tage hunk' })
         map('v', '<leader>hr', function()
           gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
         end, { desc = 'git [r]eset hunk' })
-        -- normal mode
+
+        -- Actions — normal mode
         map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
         map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
         map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
@@ -58,6 +62,7 @@ return {
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
+
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
         map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
