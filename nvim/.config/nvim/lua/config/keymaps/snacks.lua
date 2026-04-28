@@ -189,20 +189,6 @@ function M.setup()
     Snacks.picker.lsp_workspace_symbols()
   end, "Workspace Symbols")
 
-  -- Other
-  km.n("<leader>z", function()
-    Snacks.zen()
-  end, "Zen Mode")
-  km.n("<leader>Z", function()
-    Snacks.zen.zoom()
-  end, "Zoom")
-  km.n("<leader>.", function()
-    Snacks.scratch()
-  end, "Scratch Buffer")
-  km.n("<leader>S", function()
-    Snacks.scratch.select()
-  end, "Scratch Select")
-
   -- FIX: tránh đè <leader>n
   km.n("<leader>sn", function()
     Snacks.notifier.show_history()
@@ -244,10 +230,10 @@ function M.setup()
   end, "Terminal (file dir)")
 
   -- Scope text objects (Visual + Operator-pending)
-  km.map({ "n", "x", "o" }, "ii", function()
+  km.map({ "x", "o" }, "ii", function()
     Snacks.scope.textobject("i")
   end, "Inner Scope")
-  km.map({ "n", "x", "o" }, "ai", function()
+  km.map({ "x", "o" }, "ai", function()
     Snacks.scope.textobject("a")
   end, "Outer Scope")
 

@@ -31,39 +31,34 @@ return {
     }
 
     -- Conditional linters
-    lint.linters.eslint_d = vim.tbl_extend("force", lint.linters.eslint_d or {}, {
-      condition = function(ctx)
-        return has_eslint_config(ctx.dirname)
-      end,
-    })
+    lint.linters.eslint_d.condition = function(ctx)
+      return has_eslint_config(ctx.dirname)
+    end
 
-    lint.linters.oxlint = vim.tbl_extend("force", lint.linters.oxlint or {}, {
-      condition = function(ctx)
-        return not has_eslint_config(ctx.dirname)
-      end,
-    })
+    lint.linters.oxlint.condition = function(ctx)
+      return not has_eslint_config(ctx.dirname)
+    end
 
     -- Debounce lint (important)
-    local uv = vim.loop
-    local timer = uv.new_timer()
+    local timer = nil
     local function debounce_lint(ms)
       return function()
-        timer:stop()
-        timer:start(
-          ms,
-          0,
-          vim.schedule_wrap(function()
-            local buf = vim.api.nvim_get_current_buf()
+        if timer then
+          timer:stop()
+        end
 
-            local max_size = 200 * 1024
-            local ok, stats = pcall(uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_size then
-              return
-            end
+        timer = vim.defer_fn(function()
+          local buf = vim.api.nvim_get_current_buf()
 
-            require("lint").try_lint()
-          end)
-        )
+          -- skip file lớn
+          local max_size = 200 * 1024
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_size then
+            return
+          end
+
+          lint.try_lint()
+        end, ms)
       end
     end
 

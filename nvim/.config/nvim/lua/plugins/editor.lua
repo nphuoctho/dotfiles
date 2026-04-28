@@ -35,35 +35,6 @@ return {
     end,
   },
 
-  -- Auto-close brackets, quotes
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts = {
-      check_ts = true, -- dùng treesitter để tránh pair trong comments/strings
-      ts_config = {
-        lua = { "string" },
-        javascript = { "template_string" },
-      },
-    },
-  },
-
-  -- Auto-close và auto-rename HTML/JSX tags
-  {
-    "windwp/nvim-ts-autotag",
-    ft = {
-      "html",
-      "javascript",
-      "typescript",
-      "javascriptreact",
-      "typescriptreact",
-      "vue",
-      "svelte",
-      "xml",
-    },
-    opts = {},
-  },
-
   -- Mini Nvim
   { "echasnovski/mini.ai", version = "*", event = "VeryLazy", opts = {} },
   { "echasnovski/mini.comment", version = "*", event = "VeryLazy", opts = {} },
