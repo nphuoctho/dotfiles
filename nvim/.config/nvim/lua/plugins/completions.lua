@@ -36,10 +36,7 @@ return {
         list = {
           selection = {
             -- Không preselect khi đang jump snippet
-            preselect = function(_)
-              return not require("blink.cmp").snippet_active({ direction = 1 })
-            end,
-            -- Tự insert item khi chỉ có 1 kết quả duy nhất
+            preselect = true, -- Tự insert item khi chỉ có 1 kết quả duy nhất
             auto_insert = false,
           },
         },
