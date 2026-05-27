@@ -11,6 +11,18 @@ return {
   },
 
   {
+    "LazyVim/LazyVim",
+    opts = function()
+      vim.filetype.add({
+        pattern = {
+          ["docker%-compose.*%.ya?ml"] = "yaml.docker-compose",
+          ["compose.*%.ya?ml"] = "yaml.docker-compose",
+        },
+      })
+    end,
+  },
+
+  {
     "lpoto/telescope-docker.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
     keys = {
