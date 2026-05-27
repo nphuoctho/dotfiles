@@ -8,7 +8,9 @@ return {
           ---@type lspconfig.settings.basedpyright
           settings = {
             basedpyright = {
-              typeCheckingMode = "standard", -- "off" | "basic" | "standard" | "strict"
+              -- basedpyright strict hơn pyright nhiều: bắt đầu "basic", tăng dần khi
+              -- codebase đã type-clean. "standard" sẽ kêu rất nhiều với code Python thường.
+              typeCheckingMode = "basic", -- "off" | "basic" | "standard" | "strict" | "all"
               analysis = {
                 autoImportCompletions = true,
                 useLibraryCodeForTypes = true,
