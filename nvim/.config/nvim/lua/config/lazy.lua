@@ -76,7 +76,6 @@ require("lazy").setup({
         "tutor",
         "zipPlugin",
         "rplugin",
-        "shada",
       },
     },
   },

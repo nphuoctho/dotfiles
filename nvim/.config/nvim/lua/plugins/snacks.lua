@@ -19,8 +19,5 @@ return {
         border = "rounded",
       },
     },
-    -- Picker config bỏ ở đây: vim.g.lazyvim_picker = "telescope" → snacks picker
-    -- không phải picker active. Cấu hình explorer cho telescope (nếu cần) đặt
-    -- trong lua/plugins/telescope.lua.
   },
 }
