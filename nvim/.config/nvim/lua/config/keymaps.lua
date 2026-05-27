@@ -1,5 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 local map = function(mode, lhs, rhs, desc, opts)
   opts = opts or {}
@@ -20,7 +22,10 @@ map("n", "<leader>cy", function()
     vim.notify("No diagnostic at cursor", vim.log.levels.WARN)
     return
   end
-  -- Nếu nhiều diagnostic, lấy cái đầu tiên (severity cao nhất)
+  -- Sắp theo severity (1=ERROR, 2=WARN, 3=INFO, 4=HINT) → lấy nghiêm trọng nhất
+  table.sort(diags, function(a, b)
+    return a.severity < b.severity
+  end)
   local msg = diags[1].message
   vim.fn.setreg("+", msg)
   vim.notify("Copied: " .. msg, vim.log.levels.INFO)
