@@ -28,7 +28,7 @@ return {
                 rangeVariableTypes = true,
               },
               analyses = {
-                -- fieldalignment: noisy, deprecated (chuyển vào govet modernizer)
+                -- fieldalignment: noisy, deprecated
                 nilness = true,
                 unusedparams = true,
                 unusedwrite = true,
@@ -40,41 +40,22 @@ return {
               completeUnimported = true,
               staticcheck = true,
               directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-              semanticTokens = true,
+              -- tắt để né workaround hỏng của LazyVim
+              semanticTokens = false,
             },
           },
         },
-        -- Templ LSP (Go templating cho htmx/web)
-        templ = {},
+        templ = {}, -- Templ LSP cho htmx/web
       },
       setup = {
+        -- override workaround của LazyVim
         gopls = function(_, _)
-          -- Override LazyVim's gopls setup: nil-safe access to semantic tokens.
-          -- Newer Neovim/nvim-lspconfig versions không còn đặt full default
-          -- capabilities ở client.config.capabilities, nên textDocument có thể nil.
-          Snacks.util.lsp.on({ name = "gopls" }, function(_, client)
-            if client.server_capabilities.semanticTokensProvider then
-              return
-            end
-            local caps = client.config.capabilities or {}
-            local semantic = (caps.textDocument or {}).semanticTokens
-              or vim.lsp.protocol.make_client_capabilities().textDocument.semanticTokens
-            client.server_capabilities.semanticTokensProvider = {
-              full = true,
-              legend = {
-                tokenTypes = semantic.tokenTypes,
-                tokenModifiers = semantic.tokenModifiers,
-              },
-              range = true,
-            }
-          end)
+          return false
         end,
       },
     },
   },
 
-  -- Mason: chỉ thêm tool không có sẵn trong LazyVim go extra
-  -- (goimports, gofumpt, golangci-lint, delve, gomodifytags, impl đã có sẵn)
   {
     "mason-org/mason.nvim",
     opts = function(_, opts)
