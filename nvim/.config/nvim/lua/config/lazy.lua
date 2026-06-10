@@ -81,3 +81,7 @@ require("lazy").setup({
     },
   },
 })
+
+-- Undo LazyVim defer-clipboard: nó set clipboard="" trong setup() và đợi VeryLazy mới restore.
+-- Hệ quả: yank ngay sau khi mở nvim có thể không vào + register. Set lại ngay đây.
+vim.opt.clipboard = "unnamedplus"
