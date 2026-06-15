@@ -1,0 +1,46 @@
+[mgr]
+ratio          = [2, 3, 4]
+sort_by        = "natural"
+sort_translit  = true
+scrolloff      = 5
+linemode       = "size_only"
+show_hidden    = false
+
+[preview]
+max_width  = 1000
+max_height = 1000
+
+[opener]
+extract = [
+	{ run = 'ouch d -y "$@"', desc = "Extract with ouch", for = "unix" },
+]
+
+[[plugin.prepend_fetchers]]
+url   = "*"
+run   = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url   = "*/"
+run   = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url   = "local://*"
+run   = "mime-ext.local"
+prio  = "high"
+group = "mime"
+
+[[plugin.prepend_fetchers]]
+url   = "remote://*"
+run   = "mime-ext.remote"
+prio  = "high"
+group = "mime"
+
+[[plugin.prepend_previewers]]
+url = "*.{zip,7z,tar,tgz,tbz,tbz2,txz,gz,bz2,xz,zst,rar,jar,war,ear,apk,deb,rpm}"
+run = "ouch"
+
+[[plugin.prepend_previewers]]
+mime = "application/{zip,x-tar,gzip,x-bzip2,x-7z-compressed,vnd.rar,x-rar-compressed,x-xz,zstd,java-archive,x-archive}"
+run  = "ouch"
