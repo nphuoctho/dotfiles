@@ -1,0 +1,61 @@
+[mgr]
+
+prepend_keymap = [
+	# ── smart-enter: l mở file hoặc vào thư mục ──────────────────────────
+	{ on = "l",        run = "plugin smart-enter",                            desc = "Enter dir / open file" },
+
+	# ── lazygit ──────────────────────────────────────────────────────────
+	{ on = ["g", "l"], run = "plugin lazygit",                                desc = "Open lazygit" },
+
+	# ── clipboard.yazi ───────────────────────────────────────────────────
+	{ on = "y",        run = ["yank", "plugin clipboard -- --action=copy"],   desc = "Yank + copy to system clipboard" },
+	{ on = "<C-p>",    run = "plugin clipboard -- --action=paste",            desc = "Paste from system clipboard" },
+
+	# ── ouch: nén ────────────────────────────────────────────────────────
+	{ on = ["C", "z"], run = "plugin ouch",                                   desc = "Compress (zip)" },
+	{ on = ["C", "7"], run = "plugin ouch 7z",                                desc = "Compress (7z)" },
+	{ on = ["C", "t"], run = "plugin ouch tar.gz",                            desc = "Compress (tar.gz)" },
+
+	# ── jump-to-char (vim f) ─────────────────────────────────────────────
+	{ on = "f",        run = "plugin jump-to-char",                           desc = "Jump to file starting with <char>" },
+
+	# ── live-filter: filter live, không auto-enter folder ────────────────
+	{ on = "F",        run = "plugin live-filter",                            desc = "Live filter (no auto-enter)" },
+
+	# ── tab management ───────────────────────────────────────────────────
+	{ on = ["t", "c"], run = "tab_close",                                     desc = "Close current tab" },
+	{ on = "<A-1>",    run = "tab_switch 0",                                  desc = "Switch to tab 1" },
+	{ on = "<A-2>",    run = "tab_switch 1",                                  desc = "Switch to tab 2" },
+	{ on = "<A-3>",    run = "tab_switch 2",                                  desc = "Switch to tab 3" },
+	{ on = "<A-4>",    run = "tab_switch 3",                                  desc = "Switch to tab 4" },
+	{ on = "<A-5>",    run = "tab_switch 4",                                  desc = "Switch to tab 5" },
+	{ on = "<A-6>",    run = "tab_switch 5",                                  desc = "Switch to tab 6" },
+	{ on = "<A-7>",    run = "tab_switch 6",                                  desc = "Switch to tab 7" },
+	{ on = "<A-8>",    run = "tab_switch 7",                                  desc = "Switch to tab 8" },
+	{ on = "<A-9>",    run = "tab_switch 8",                                  desc = "Switch to tab 9" },
+
+	# ── toggle-pane: phóng to / ẩn preview pane ──────────────────────────
+	{ on = ["T", "T"], run = "plugin toggle-pane max-preview",                desc = "Maximize / restore preview pane" },
+	{ on = ["T", "h"], run = "plugin toggle-pane min-preview",                desc = "Show / hide preview pane" },
+
+	# ── bookmarks: vim-style marks ───────────────────────────────────────
+	{ on = "m",        run = "plugin bookmarks save",                         desc = "Save bookmark" },
+	{ on = "'",        run = "plugin bookmarks jump",                         desc = "Jump to bookmark" },
+	{ on = ["b", "d"], run = "plugin bookmarks delete",                       desc = "Delete bookmark" },
+	{ on = ["b", "D"], run = "plugin bookmarks delete_all",                   desc = "Delete all bookmarks" },
+
+	# ── relative-motions: 3j / 5k / 2gg / 2yy ... ────────────────────────
+	{ on = "1",        run = "plugin relative-motions 1",                     desc = "Motion count 1" },
+	{ on = "2",        run = "plugin relative-motions 2",                     desc = "Motion count 2" },
+	{ on = "3",        run = "plugin relative-motions 3",                     desc = "Motion count 3" },
+	{ on = "4",        run = "plugin relative-motions 4",                     desc = "Motion count 4" },
+	{ on = "5",        run = "plugin relative-motions 5",                     desc = "Motion count 5" },
+	{ on = "6",        run = "plugin relative-motions 6",                     desc = "Motion count 6" },
+	{ on = "7",        run = "plugin relative-motions 7",                     desc = "Motion count 7" },
+	{ on = "8",        run = "plugin relative-motions 8",                     desc = "Motion count 8" },
+	{ on = "9",        run = "plugin relative-motions 9",                     desc = "Motion count 9" },
+
+	# ── preview scroll ───────────────────────────────────────────────────
+	{ on = "<C-d>",    run = "seek 5",                                        desc = "Scroll preview down 5 lines" },
+	{ on = "<C-u>",    run = "seek -5",                                       desc = "Scroll preview up 5 lines" },
+]
