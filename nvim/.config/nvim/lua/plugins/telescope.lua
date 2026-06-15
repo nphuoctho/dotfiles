@@ -15,6 +15,14 @@ return {
           ["<C-k>"] = actions.move_selection_previous,
         },
       }
+
+      opts.defaults.file_ignore_patterns = {
+        "node_modules/.*",
+        ".venv/.*",
+        "%.git/.*",
+        "build/.*",
+        "dist/.*",
+      }
     end,
   },
 }
