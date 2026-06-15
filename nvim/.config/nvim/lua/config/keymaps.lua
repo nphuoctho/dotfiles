@@ -28,3 +28,10 @@ map("n", "<leader>cy", function()
   vim.fn.setreg("+", msg)
   vim.notify("Copied: " .. msg, vim.log.levels.INFO)
 end, "Copy diagnostic message")
+
+map("n", "<leader>ud", function()
+  local bufnr = 0
+  local enabled = vim.diagnostic.is_enabled({ bufnr = bufnr })
+  vim.diagnostic.enable(not enabled, { bufnr = bufnr })
+  vim.notify("Diagnostic " .. (enabled and "OFF" or "ON") .. " for buffer", vim.log.levels.INFO)
+end, "Toggle diagnostic (buffer)")
