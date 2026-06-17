@@ -29,11 +29,6 @@ rev = "598cdb6"
 hash = "2678c84a0b3a0b22504e918ccaf99011"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:smart-filter"
-rev = "598cdb6"
-hash = "c887903a63a2ff520081b6d90a4b3392"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
 rev = "598cdb6"
 hash = "7a4b4237223aaa94e589d1c01a23542a"
@@ -57,6 +52,10 @@ hash = "1e50ed1e3bea9b6e82f24e40e69cc3d"
 use = "UnleashedFurai/bookmarks"
 rev = "b99c2f9"
 hash = "1eaeb7f84aa3e28295ea5814fb9ea45c"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:restore"
+rev = "598cdb6"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"

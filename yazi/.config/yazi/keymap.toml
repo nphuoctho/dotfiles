@@ -22,6 +22,9 @@ prepend_keymap = [
 	# ── live-filter: filter live, không auto-enter folder ────────────────
 	{ on = "F",        run = "plugin live-filter",                            desc = "Live filter (no auto-enter)" },
 
+	# ── shell tại cwd của yazi (exit shell → quay lại yazi) ──────────────
+	{ on = "!",        run = 'shell "$SHELL" --block',                         desc = "Drop to shell at current dir" },
+
 	# ── tab management ───────────────────────────────────────────────────
 	{ on = ["t", "c"], run = "tab_close",                                     desc = "Close current tab" },
 	{ on = "<A-1>",    run = "tab_switch 0",                                  desc = "Switch to tab 1" },
@@ -37,6 +40,11 @@ prepend_keymap = [
 	# ── toggle-pane: phóng to / ẩn preview pane ──────────────────────────
 	{ on = ["T", "T"], run = "plugin toggle-pane max-preview",                desc = "Maximize / restore preview pane" },
 	{ on = ["T", "h"], run = "plugin toggle-pane min-preview",                desc = "Show / hide preview pane" },
+
+	# ── trash: D đẩy vào trash sẵn rồi ───────────────────────────────────
+	{ on = "U",        run = "plugin restore",                                desc = "Restore last deleted files" },
+	{ on = ["g", "t"], run = "cd ~/.local/share/Trash/files",                 desc = "Go to trash dir" },
+	{ on = ["g", "T"], run = 'shell "trash-empty -i" --block',                desc = "Empty trash (interactive confirm)" },
 
 	# ── bookmarks: vim-style marks ───────────────────────────────────────
 	{ on = "m",        run = "plugin bookmarks save",                         desc = "Save bookmark" },
