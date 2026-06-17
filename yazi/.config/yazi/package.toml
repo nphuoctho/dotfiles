@@ -56,6 +56,7 @@ hash = "1eaeb7f84aa3e28295ea5814fb9ea45c"
 [[plugin.deps]]
 use = "yazi-rs/plugins:restore"
 rev = "598cdb6"
+hash = "99aa06d3014798d86001c324468d497f"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
