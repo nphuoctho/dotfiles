@@ -20,7 +20,9 @@ extract = [
 
 [open]
 prepend_rules = [
-	{ name = "*", use = "edit" },
+	{ mime = "application/{zip,x-tar,gzip,x-bzip2,x-7z-compressed,vnd.rar,x-rar-compressed,x-xz,zstd,java-archive,x-archive}", use = "extract" },
+	{ url = "*.{zip,7z,tar,tgz,tbz,tbz2,txz,gz,bz2,xz,zst,rar,jar,war,ear,apk,deb,rpm}", use = "extract" },
+	{ url = "*", use = "edit" },
 ]
 
 [[plugin.prepend_fetchers]]
