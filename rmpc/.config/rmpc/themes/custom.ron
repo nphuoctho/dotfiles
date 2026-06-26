@@ -48,7 +48,7 @@
     ),
     tab_bar: (
         active_style: (fg: "black", bg: "blue", modifiers: "Bold"),
-        inactive_style: (),
+        inactive_style: (fg: "gray", modifiers: "Dim"),
     ),
     cava: (
         bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'],

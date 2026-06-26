@@ -56,8 +56,8 @@
             "<Down>":     VolumeDown,
             "<C-=>":      VolumeUp,
             "<C-->":      VolumeDown,
-            "L":          ExternalCommand(command: ["rmpc", "seek", "+10"], description: "Seek +10s"),
-            "H":          ExternalCommand(command: ["rmpc", "seek", "-10"], description: "Seek -10s"),
+            "L":          NextTab,
+            "H":          PreviousTab,
             "<S-Right>":  NextTrack,
             "<S-Left>":   PreviousTrack,
             "<C-l>":      NextTrack,
@@ -142,6 +142,7 @@
             "d":          Delete,
             "D":          DeleteAll,
             "<CR>":       Play,
+            "l":          Play,
             "C":          JumpToCurrent,
             "X":          Shuffle,
         },
@@ -173,18 +174,18 @@
                 direction: Vertical,
                 panes: [
                     (
-                        size: "55%",
+                        size: "60%",
                         pane: Split(
                             direction: Horizontal,
                             panes: [
                                 (
-                                    size: "33%",
+                                    size: "30%",
                                     borders: "ALL",
                                     border_symbols: Rounded,
                                     pane: Pane(AlbumArt)
                                 ),
                                 (
-                                    size: "67%",
+                                    size: "70%",
                                     pane: Split(
                                         direction: Vertical,
                                         panes: [
@@ -207,7 +208,7 @@
                         ),
                     ),
                     (
-                        size: "45%",
+                        size: "40%",
                         borders: "ALL",
                         border_symbols: Rounded,
                         pane: Pane(Cava)
