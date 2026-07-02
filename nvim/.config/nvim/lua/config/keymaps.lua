@@ -20,7 +20,7 @@ map("n", "<leader>cy", function()
     vim.notify("No diagnostic at cursor", vim.log.levels.WARN)
     return
   end
-  -- Sắp theo severity (1=ERROR, 2=WARN, 3=INFO, 4=HINT) → lấy nghiêm trọng nhất
+  -- sort by severity (1=ERROR..4=HINT), pick the worst one
   table.sort(diags, function(a, b)
     return a.severity < b.severity
   end)
@@ -36,7 +36,7 @@ map("n", "<leader>ud", function()
   vim.notify("Diagnostic " .. (enabled and "OFF" or "ON") .. " for buffer", vim.log.levels.INFO)
 end, "Toggle diagnostic (buffer)")
 
--- Wrap :source / :so — chỉ cho phép trên buffer .lua / .vim, còn lại notify warn
+-- Wrap :source / :so — only allow on .lua / .vim buffers, warn otherwise
 vim.api.nvim_create_user_command("SafeSource", function(opts)
   local target = opts.args ~= "" and opts.args or "%"
   if target == "%" then

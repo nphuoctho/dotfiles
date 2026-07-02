@@ -7,7 +7,7 @@ return {
       keymap = {
 
         preset = "super-tab",
-        -- Override / thêm trên preset
+        -- extend / override the preset
         ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
 
         -- Scroll doc window
@@ -28,16 +28,14 @@ return {
 
       -- ─── Completion behavior ──────────────────────────────────────────────
       completion = {
-        -- Tự động show khi gõ, không cần trigger thủ công
         trigger = {
-          show_in_snippet = false, -- tắt popup khi đang trong snippet placeholder
+          show_in_snippet = false, -- no popup while inside a snippet placeholder
         },
 
         list = {
           selection = {
-            -- Không preselect khi đang jump snippet
-            preselect = true, -- Tự insert item khi chỉ có 1 kết quả duy nhất
-            auto_insert = false,
+            preselect = true, -- highlight the first item
+            auto_insert = false, -- wait for <CR> to insert
           },
         },
 

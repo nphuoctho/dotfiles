@@ -1,14 +1,14 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 
--- TypeScript LSP: "vtsls" (default, stable) hoặc "tsgo" (mới hơn, nhanh hơn ~10x)
--- tsgo vẫn experimental, dùng vtsls trừ khi monorepo rất lớn
+-- TypeScript LSP: "vtsls" (stable) or "tsgo" (~10x faster, still experimental).
+-- Stick with vtsls unless the monorepo is huge.
 vim.g.lazyvim_ts_lsp = "vtsls"
 
--- Python LSP: "pyright" (default) hoặc "basedpyright" (strict hơn, community fork)
--- basedpyright recommended nếu cần type checking nghiêm ngặt
+-- Python LSP: "pyright" (default) or "basedpyright" (stricter community fork).
+-- Pick basedpyright if you want real type checking.
 vim.g.lazyvim_python_lsp = "basedpyright"
 
--- Ruff: modern Python linter+formatter (thay thế flake8/black/isort)
+-- Ruff: replaces flake8 + black + isort.
 vim.g.lazyvim_python_ruff = "ruff"
 
 vim.g.lazyvim_picker = "telescope"

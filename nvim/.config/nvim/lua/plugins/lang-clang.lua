@@ -13,7 +13,7 @@ return {
             "--completion-style=detailed",
             "--function-arg-placeholders",
             "--fallback-style=llvm",
-            -- Thêm nếu project lớn:
+            -- add for big projects:
             -- "--limit-results=20",
             -- "--pch-storage=memory",
           },
@@ -22,7 +22,7 @@ return {
             completeUnimported = true,
             clangdFileStatus = true,
           },
-          -- Fix offset encoding để tránh warning
+          -- pin offset encoding to silence the mismatch warning
           capabilities = {
             offsetEncoding = { "utf-16" },
           },

@@ -20,9 +20,9 @@ return {
     opts = function()
       local actions = require("diffview.actions")
       return {
-        -- Diff theo style git (1 = unified, 2 = side-by-side, 3 = combined, 4 = histogram)
+        -- git diff style (1 = unified, 2 = side-by-side, 3 = combined, 4 = histogram)
         diff_binaries = false,
-        enhanced_diff_hl = true, -- highlight word-level diff trong dòng
+        enhanced_diff_hl = true, -- word-level diff highlight within a line
         git_cmd = { "git" },
         use_icons = true,
         show_help_hints = true,
@@ -39,10 +39,10 @@ return {
         },
 
         view = {
-          -- Default view: 2 panes side-by-side như VSCode
+          -- default: 2 panes side-by-side like VSCode
           default = {
             layout = "diff2_horizontal",
-            disable_diagnostics = true, -- tắt LSP diagnostics trong diff view (đỡ noise)
+            disable_diagnostics = true, -- hide LSP diagnostics in the diff (less noise)
             winbar_info = false,
           },
           merge_tool = {

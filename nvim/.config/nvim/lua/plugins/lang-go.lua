@@ -40,15 +40,15 @@ return {
               completeUnimported = true,
               staticcheck = true,
               directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-              -- tắt để né workaround hỏng của LazyVim
+              -- off to dodge LazyVim's broken workaround
               semanticTokens = false,
             },
           },
         },
-        templ = {}, -- Templ LSP cho htmx/web
+        templ = {}, -- templ LSP for htmx/web
       },
       setup = {
-        -- override workaround của LazyVim
+        -- override LazyVim's workaround
         gopls = function(_, _)
           return false
         end,
@@ -61,13 +61,13 @@ return {
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, {
-        "goimports-reviser", -- sort imports theo group (std / 3rd / local)
+        "goimports-reviser", -- sort imports by group (std / 3rd / local)
         "templ", -- templ LSP
       })
     end,
   },
 
-  -- Treesitter: thêm templ
+  -- Treesitter: add templ
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
@@ -76,7 +76,7 @@ return {
     end,
   },
 
-  -- Conform: wire goimports-reviser thay cho goimports mặc định
+  -- Conform: use goimports-reviser instead of the default goimports
   {
     "stevearc/conform.nvim",
     optional = true,
@@ -88,7 +88,7 @@ return {
     },
   },
 
-  -- Filetype association cho .templ
+  -- filetype mapping for .templ
   {
     "neovim/nvim-lspconfig",
     init = function()
