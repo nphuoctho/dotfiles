@@ -102,6 +102,7 @@ return {
   {
     "leoluz/nvim-dap-go",
     keys = {
+      { "<leader>dg", "", desc = "+Go DAP", ft = "go" },
       {
         "<leader>dgt",
         function()
