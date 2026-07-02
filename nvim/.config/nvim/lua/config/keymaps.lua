@@ -35,3 +35,60 @@ map("n", "<leader>ud", function()
   vim.diagnostic.enable(not enabled, { bufnr = bufnr })
   vim.notify("Diagnostic " .. (enabled and "OFF" or "ON") .. " for buffer", vim.log.levels.INFO)
 end, "Toggle diagnostic (buffer)")
+
+-- Wrap :source / :so — chỉ cho phép trên buffer .lua / .vim, còn lại notify warn
+vim.api.nvim_create_user_command("SafeSource", function(opts)
+  local target = opts.args ~= "" and opts.args or "%"
+  if target == "%" then
+    local ft = vim.bo.filetype
+    local name = vim.fn.expand("%:t")
+    if ft == "lua" then
+      vim.cmd("luafile %")
+      vim.notify("Sourced " .. name, vim.log.levels.INFO, { title = "Source" })
+    elseif ft == "vim" then
+      vim.cmd("source %")
+      vim.notify("Sourced " .. name, vim.log.levels.INFO, { title = "Source" })
+    else
+      local kind = ft ~= "" and ft or "this"
+      vim.notify(
+        "Can't source a " .. kind .. " buffer.\nTry :so $MYVIMRC to reload config.",
+        vim.log.levels.WARN,
+        { title = "Source" }
+      )
+    end
+  else
+    vim.cmd("source " .. target)
+    vim.notify("Sourced " .. target, vim.log.levels.INFO, { title = "Source" })
+  end
+end, { nargs = "?", complete = "file", desc = "Safely source file/buffer" })
+
+vim.cmd([[
+  cnoreabbrev <expr> so     (getcmdtype() == ':' && getcmdpos() == 3) ? 'SafeSource' : 'so'
+  cnoreabbrev <expr> source (getcmdtype() == ':' && getcmdpos() == 7) ? 'SafeSource' : 'source'
+]])
+
+map("n", "<leader>cx", function()
+  vim.cmd("write")
+  local file = vim.fn.expand("%:p")
+  local ft = vim.bo.filetype
+  local exe
+  if ft == "python" then
+    local root = vim.fs.find({ "pyproject.toml" }, {
+      upward = true,
+      path = vim.fn.expand("%:p:h"),
+    })[1]
+    local has_uv = root ~= nil and vim.fn.executable("uv") == 1
+    exe = has_uv and "uv run python" or "python"
+  elseif ft == "lua" then
+    exe = "lua"
+  elseif ft == "sh" or ft == "bash" or ft == "zsh" then
+    exe = "bash"
+  elseif ft == "go" then
+    exe = "go run"
+  else
+    vim.notify("No runner for filetype: " .. ft, vim.log.levels.WARN)
+    return
+  end
+  vim.cmd("botright 15split | terminal " .. exe .. " " .. vim.fn.shellescape(file))
+  vim.cmd("startinsert")
+end, "Execute current file")
