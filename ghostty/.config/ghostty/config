@@ -1,4 +1,4 @@
-# Font. Maple Mono NF has ligatures, ghostty turns them on by default.
+# Maple Mono has ligatures, on by default
 font-family = "Maple Mono NF"
 font-size = 13
 
@@ -6,22 +6,27 @@ font-size = 13
 window-decoration = none
 gtk-titlebar = false
 
-background-opacity = 0.9
+background-opacity = 0.95
 background-blur = true
 
-# No padding
-window-padding-x = 0
-window-padding-y = 0
+window-padding-x = 8
+window-padding-y = 8
 
 mouse-hide-while-typing = true
 # No size popup on i3 resizes
 resize-overlay = never
 
+# Share one process across windows
+gtk-single-instance = true
+
+# Keep terminfo working through sudo and ssh
+shell-integration-features = cursor,title,path,sudo,ssh-env,ssh-terminfo
+
 # Beam cursor, no blink
 cursor-style = bar
 cursor-style-blink = false
 
-# Copy selection to the clipboard
+# Copy on select to the clipboard
 copy-on-select = clipboard
 
 theme = TokyoNight Night
