@@ -1,48 +1,32 @@
-# ghostty — ported from alacritty (ayu_dark + JetBrainsMono)
-
-# Font. Ligatures (calt/liga) are on by default in ghostty and
-# JetBrainsMono Nerd Font ships them, so nothing extra needed.
+# Font. Maple Mono NF has ligatures, ghostty turns them on by default.
 font-family = "Maple Mono NF"
 font-size = 13
 
-# Window — no titlebar / decorations
+# No titlebar
 window-decoration = none
 gtk-titlebar = false
+
 background-opacity = 0.9
 background-blur = true
-window-padding-x = 10
-window-padding-y = 10
-window-padding-balance = false
-mouse-hide-while-typing = true
 
-# Cursor — beam, no blink (matches alacritty)
+# No padding
+window-padding-x = 0
+window-padding-y = 0
+
+mouse-hide-while-typing = true
+# No size popup on i3 resizes
+resize-overlay = never
+
+# Beam cursor, no blink
 cursor-style = bar
 cursor-style-blink = false
 
-# Copy selection straight to the clipboard
+# Copy selection to the clipboard
 copy-on-select = clipboard
 
-# Colors — ayu dark
-background = 0A0E14
-foreground = B3B1AD
-palette = 0=#01060E
-palette = 1=#EA6C73
-palette = 2=#91B362
-palette = 3=#F9AF4F
-palette = 4=#53BDFA
-palette = 5=#FAE994
-palette = 6=#90E1C6
-palette = 7=#C7C7C7
-palette = 8=#686868
-palette = 9=#F07178
-palette = 10=#C2D94C
-palette = 11=#FFB454
-palette = 12=#59C2FF
-palette = 13=#FFEE99
-palette = 14=#95E6CB
-palette = 15=#FFFFFF
+theme = TokyoNight Night
 
-# Keybinds (mirror alacritty)
+# Keybinds, same as alacritty
 keybind = ctrl+shift+n=new_window
 keybind = ctrl+shift+f=toggle_fullscreen
 keybind = ctrl+shift+l=toggle_maximize
@@ -52,5 +36,5 @@ keybind = ctrl+shift+v=paste_from_clipboard
 keybind = ctrl+equal=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+zero=reset_font_size
-# Shift+Enter -> ESC + CR (escaped newline)
+# Shift+Enter sends an escaped newline
 keybind = shift+enter=text:\x1b\r
