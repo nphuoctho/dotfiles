@@ -11,6 +11,8 @@ background-blur = true
 
 window-padding-x = 8
 window-padding-y = 8
+# Split leftover pixels evenly, no bigger gap at bottom
+window-padding-balance = true
 
 mouse-hide-while-typing = true
 # No size popup on i3 resizes
