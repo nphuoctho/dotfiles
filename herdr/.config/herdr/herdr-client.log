@@ -1,0 +1,53 @@
+2026-07-14T07:42:21.116516Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1844351
+2026-07-14T07:42:21.116554Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-14T07:42:21.123658Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-14T07:43:24.599643Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=1844351
+2026-07-16T09:17:49.871957Z  WARN herdr::config::io: config parse error, using defaults err=TOML parse error at line 126, column 11
+    |
+126 | command = "lazygit"
+    |           ^^^^^^^^^
+invalid type: string "lazygit", expected a sequence
+
+2026-07-16T09:17:49.872222Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1084002
+2026-07-16T09:17:49.872302Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-16T09:17:49.970052Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-16T09:18:14.951249Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=1084002
+2026-07-16T09:18:35.406380Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1086543
+2026-07-16T09:18:35.406414Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-16T09:18:35.580708Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-16T09:57:41.561861Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=1086543
+2026-07-16T09:58:23.595276Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1237928
+2026-07-16T09:58:23.595320Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-16T09:58:23.787871Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-16T10:00:06.668019Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=1237928
+2026-07-20T01:28:37.589912Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=938194
+2026-07-20T01:28:37.590838Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T01:28:37.805853Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T01:29:18.920831Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=938194
+2026-07-20T02:53:41.343236Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1010081
+2026-07-20T02:53:41.343457Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T02:53:41.471454Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T02:55:19.204884Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1017766
+2026-07-20T02:55:19.204949Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T02:55:19.376985Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T03:09:39.759618Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=1017766
+2026-07-20T03:09:43.967378Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1025233
+2026-07-20T03:09:43.967541Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T03:09:44.050515Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T03:37:08.039835Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=1025233
+2026-07-20T03:37:11.053611Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=1036524
+2026-07-20T03:37:11.053691Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T03:37:11.244218Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T04:21:13.654153Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=17757
+2026-07-20T04:21:13.654280Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T04:21:13.889106Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T04:25:44.236267Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=44863
+2026-07-20T04:25:44.236350Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T04:25:44.343160Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T10:03:17.681530Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=44863
+2026-07-20T14:07:58.770852Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=497792
+2026-07-20T14:07:58.770891Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-20T14:07:58.909471Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-21T01:16:45.594829Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=607169
+2026-07-21T01:16:45.594939Z  INFO herdr::client: connecting to server path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-21T01:16:45.766041Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame

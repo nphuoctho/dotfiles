@@ -2,7 +2,6 @@
 arandr
 aws-cli
 btop
-bun
 cava
 chafa
 chromium
@@ -10,6 +9,7 @@ clang
 claude-desktop-bin
 cloudflare-warp-bin
 cloudflared
+docker
 docker-buildx
 docker-compose
 duf
@@ -34,8 +34,6 @@ obs-studio-git
 obsidian
 openai-codex
 ouch
-playwright
-pnpm
 poppler-glib
 resvg
 ripgrep
@@ -52,7 +50,6 @@ uv
 visual-studio-code-bin
 wget
 xorg-xinput
-yarn
 zathura
 zathura-pdf-poppler
 zoxide
