@@ -54,6 +54,6 @@ wget
 xorg-xinput
 yarn
 zathura
-zathura-pdf-mupdf
+zathura-pdf-poppler
 zoxide
 
