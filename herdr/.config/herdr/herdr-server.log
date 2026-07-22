@@ -948,3 +948,45 @@
 2026-07-21T15:40:21.945253Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
 2026-07-21T16:10:21.947143Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
 2026-07-21T16:40:21.948293Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
+2026-07-21T16:54:46.266886Z  INFO herdr::api::server: api server listening path=/home/nphuoctho/.config/herdr/herdr.sock
+2026-07-21T16:54:46.269017Z  WARN herdr::persist::restore: saved pane cwd does not exist, falling back to HOME cwd=/home/nphuoctho/Documents/Works/picklebally
+2026-07-21T16:54:46.269206Z  INFO herdr::logging: spawning pane terminal event="pane.spawn.start" subsystem="pane" outcome="started" pane_id=1 rows=24 cols=80 scrollback_limit_bytes=10000000
+2026-07-21T16:54:46.270907Z  INFO herdr::logging: pane child spawned event="pane.spawned" subsystem="pane" outcome="ok" pane_id=1 pid=162164
+2026-07-21T16:54:46.271199Z  WARN herdr::persist::restore: saved pane cwd does not exist, falling back to HOME cwd=/home/nphuoctho/Documents/Works/picklebally
+2026-07-21T16:54:46.271387Z  INFO herdr::logging: spawning pane terminal event="pane.spawn.start" subsystem="pane" outcome="started" pane_id=2 rows=24 cols=80 scrollback_limit_bytes=10000000
+2026-07-21T16:54:46.273332Z  INFO herdr::logging: pane child spawned event="pane.spawned" subsystem="pane" outcome="ok" pane_id=2 pid=162167
+2026-07-21T16:54:46.273728Z  WARN herdr::persist::restore: saved pane cwd does not exist, falling back to HOME cwd=/home/nphuoctho/Documents/Works/picklebally/pickleballdot-admin-fe
+2026-07-21T16:54:46.273908Z  INFO herdr::logging: spawning pane terminal event="pane.spawn.start" subsystem="pane" outcome="started" pane_id=3 rows=24 cols=80 scrollback_limit_bytes=10000000
+2026-07-21T16:54:46.275523Z  INFO herdr::logging: pane child spawned event="pane.spawned" subsystem="pane" outcome="ok" pane_id=3 pid=162170
+2026-07-21T16:54:46.275922Z  WARN herdr::persist::restore: saved pane cwd does not exist, falling back to HOME cwd=/home/nphuoctho/Documents/Works/picklebally/pickleballdot-admin-be
+2026-07-21T16:54:46.276075Z  INFO herdr::logging: spawning pane terminal event="pane.spawn.start" subsystem="pane" outcome="started" pane_id=4 rows=24 cols=80 scrollback_limit_bytes=10000000
+2026-07-21T16:54:46.278163Z  INFO herdr::logging: pane child spawned event="pane.spawned" subsystem="pane" outcome="ok" pane_id=4 pid=162173
+2026-07-21T16:54:46.278247Z  WARN herdr::persist::restore: saved pane cwd does not exist, falling back to HOME cwd=/home/nphuoctho/Documents/Works/picklebally
+2026-07-21T16:54:46.278287Z  INFO herdr::logging: spawning pane terminal event="pane.spawn.start" subsystem="pane" outcome="started" pane_id=5 rows=24 cols=80 scrollback_limit_bytes=10000000
+2026-07-21T16:54:46.278775Z  INFO herdr::logging: pane child spawned event="pane.spawned" subsystem="pane" outcome="ok" pane_id=5 pid=162176
+2026-07-21T16:54:46.278900Z  INFO herdr::logging: session restore evaluated event="persist.restore" subsystem="persist" outcome="ok" workspaces=1
+2026-07-21T16:54:46.278910Z  INFO herdr::app: using pane scrollback configuration pane_scrollback_limit_bytes=10000000
+2026-07-21T16:54:46.319471Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
+2026-07-21T16:54:46.320438Z  INFO herdr::server::headless: restored session already has workspaces; ignoring startup cwd cwd=/home/nphuoctho/dotfiles
+2026-07-21T16:54:46.320496Z  INFO herdr::server::headless: client protocol socket listening path=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-21T16:54:46.320511Z  INFO herdr::server::headless: herdr server started api_socket=/home/nphuoctho/.config/herdr/herdr.sock client_socket=/home/nphuoctho/.config/herdr/herdr-client.sock
+2026-07-21T16:54:46.320519Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="server" outcome="started" pid=162150
+2026-07-21T16:54:46.372330Z  INFO herdr::server::headless: client connected client_id=2 cols=218 rows=57 cell_width_px=0 cell_height_px=0 render_encoding=SemanticFrame
+2026-07-21T16:54:48.963315Z  INFO herdr::server::headless: client detach requested via keybind client_id=2
+2026-07-21T16:54:48.972824Z  INFO herdr::server::headless: client disconnected client_id=2
+2026-07-21T17:24:46.320724Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
+2026-07-21T17:54:46.322296Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
+2026-07-21T18:24:46.323046Z  INFO herdr::logging: checking for updates event="update.check.start" subsystem="update" outcome="started"
+2026-07-21T18:24:46.523885Z  INFO herdr::logging: update available event="update.available" subsystem="update" outcome="ok" version="0.7.5"
+2026-07-21T18:24:46.523938Z  INFO herdr::update: new stable build available at https://github.com/ogulcancelik/herdr/releases/download/v0.7.5/herdr-linux-x86_64
+2026-07-21T18:24:46.524922Z  INFO herdr::update: auto-update check: 0.7.5 available, waiting for explicit install
+2026-07-22T04:16:43.084493Z  INFO herdr::server::headless: client connected client_id=4 cols=234 rows=54 cell_width_px=0 cell_height_px=0 render_encoding=SemanticFrame
+2026-07-22T04:16:52.671868Z  INFO herdr::logging: tab focused event="tab.focus" subsystem="tab" outcome="ok" workspace_id="w5" tab_id="w5:t3"
+2026-07-22T04:16:55.104098Z  INFO herdr::logging: tab focused event="tab.focus" subsystem="tab" outcome="ok" workspace_id="w5" tab_id="w5:t1"
+2026-07-22T04:17:00.107430Z  INFO herdr::logging: session saved event="persist.save" subsystem="persist" outcome="ok" path=/home/nphuoctho/.config/herdr/session.json workspaces=1
+2026-07-22T04:17:27.095563Z  INFO herdr::logging: tab focused event="tab.focus" subsystem="tab" outcome="ok" workspace_id="w5" tab_id="w5:t1"
+2026-07-22T04:17:32.100007Z  INFO herdr::logging: session saved event="persist.save" subsystem="persist" outcome="ok" path=/home/nphuoctho/.config/herdr/session.json workspaces=1
+2026-07-22T04:18:27.942885Z  INFO herdr::logging: tab focused event="tab.focus" subsystem="tab" outcome="ok" workspace_id="w5" tab_id="w5:t1"
+2026-07-22T04:18:32.945701Z  INFO herdr::logging: session saved event="persist.save" subsystem="persist" outcome="ok" path=/home/nphuoctho/.config/herdr/session.json workspaces=1
+2026-07-22T04:18:43.468752Z  INFO herdr::logging: tab focused event="tab.focus" subsystem="tab" outcome="ok" workspace_id="w5" tab_id="w5:t1"
+2026-07-22T04:18:48.471048Z  INFO herdr::logging: session saved event="persist.save" subsystem="persist" outcome="ok" path=/home/nphuoctho/.config/herdr/session.json workspaces=1
