@@ -1,11 +1,12 @@
 bruno-bin
 claude-code-stable
+datagrip
+datagrip-jre
 figma-linux-next
 getnf
 herdr-bin
 hermes-agent
 lazysql-bin
 openai-codex-desktop
-pencil-dev-appimage
 tableplus
-zalo-for-linux-bin
+teams-for-linux-bin
