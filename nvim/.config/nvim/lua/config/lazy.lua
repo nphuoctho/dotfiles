@@ -44,7 +44,6 @@ require("lazy").setup({
 
     -- Editor
     { import = "lazyvim.plugins.extras.editor.navic" },
-    { import = "lazyvim.plugins.extras.ai.codeium" },
 
     -- Database ORM
     { import = "lazyvim.plugins.extras.lang.prisma" },
