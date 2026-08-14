@@ -1,0 +1,11 @@
+bruno-bin
+claude-code-stable
+figma-linux-next
+getnf
+herdr-bin
+hermes-agent
+lazysql-bin
+openai-codex-desktop
+pencil-dev-appimage
+tableplus
+zalo-for-linux-bin
