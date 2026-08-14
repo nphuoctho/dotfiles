@@ -1,0 +1,20 @@
+# Automatically match the terminal background.
+style: "auto"
+
+# Use the pager for long documents.
+pager: true
+
+# Detect the terminal width automatically (Glow caps it at 120 columns).
+width: 0
+
+# Keep the TUI focused on normal project files.
+all: false
+
+# Line numbers are useful for code review, but distracting for reading docs.
+showLineNumbers: false
+
+# Preserve intentional blank lines in the rendered document.
+preserveNewLines: true
+
+# Mouse support is disabled for predictable keyboard-first navigation.
+mouse: false
