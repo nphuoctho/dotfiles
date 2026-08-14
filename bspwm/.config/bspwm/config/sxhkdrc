@@ -261,7 +261,10 @@ super + n ; m
 super + n ; {1-9}
     bspc query -N -d {1-9} -n '.window' | xargs -I id -n 1 bspc node id -d focused
 
-
 # Move windown in HDMI Monitor
 super + alt; {1-4}
     bspc node -d HDMI-1:^{1-4}
+
+# RedShift
+super + shift + r
+  ~/.config/bspwm/eww/profilecard/scripts/Redshift toggle
