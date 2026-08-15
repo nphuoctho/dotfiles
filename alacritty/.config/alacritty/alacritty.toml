@@ -7,21 +7,13 @@
 #	gh0stzk - https://github.com/gh0stzk/dotfiles
 
 [general]
-live_config_reload = true
 import = ["themes/themes/ayu_dark.toml", "fonts.toml"]
 
-[env]
-TERM = "alacritty" # can change to "alacritty"
-# WINIT_X11_SCALE_FACTOR = "1.2"
+live_config_reload = true
 
-[window]
-decorations = "none"
-opacity = 0.9
-blur = true
-dynamic_title = true
-dynamic_padding = false
-padding = { x = 10, y = 10 }
-resize_increments = true
+[env]
+TERM = "alacritty"
+WINIT_X11_SCALE_FACTOR = "1.0"
 
 [cursor]
 blink_interval = 550
@@ -29,20 +21,28 @@ unfocused_hollow = false
 thickness = 0.15
 
 [cursor.style]
-shape = "Beam"
-blinking = "Off"
+blinking = "On"
+shape = "Block" # can change to Beam (|)
 
 [selection]
 save_to_clipboard = true
 
+[window]
+decorations = "none"
+dynamic_title = true
+opacity = 0.95
+padding = { x = 12, y = 12 }
+dynamic_padding = true
+resize_increments = true
+
 [scrolling]
-history = 5000
+history = 10000
 multiplier = 3
 
 [bell]
-animation = "EaseOutExpo"
+animation = "Linear"
 duration = 0
-# command = { program = "paplay", args = ["/usr/share/sounds/freedesktop/stereo/dialog-error.oga"] }
+command = { program = "paplay", args = ["/usr/share/sounds/freedesktop/stereo/dialog-error.oga"] }
 
 [mouse]
 hide_when_typing = true
