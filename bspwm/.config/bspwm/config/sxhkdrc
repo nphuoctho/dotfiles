@@ -131,8 +131,8 @@ XF86Audio{RaiseVolume,LowerVolume,Mute}
 
 # Microphone mute (laptop)
 XF86AudioMicMute
-    if command -v wpctl >/dev/null 2>&1; then \
-        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; \
+    if command -v wpctl >/dev/null 2>&1 && wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; then \
+        : \
     elif command -v pactl >/dev/null 2>&1; then \
         pactl set-source-mute @DEFAULT_SOURCE@ toggle; \
     fi
