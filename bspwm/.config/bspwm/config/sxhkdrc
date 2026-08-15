@@ -8,7 +8,7 @@
 
 # Show help
 alt + F1
-    OpenApps --KeyHelp
+    grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null && OpenApps --KeyHelp
 
 ############################
 # ----- Applications ----- #
@@ -129,21 +129,30 @@ XF86MonBrightness{Up,Down}
 XF86Audio{RaiseVolume,LowerVolume,Mute}
     Volume{ --inc, --dec, --toggle}
 
+# Microphone mute (laptop)
+XF86AudioMicMute
+    if command -v wpctl >/dev/null 2>&1; then \
+        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; \
+    elif command -v pactl >/dev/null 2>&1; then \
+        pactl set-source-mute @DEFAULT_SOURCE@ toggle; \
+    fi
+
 # Music Control
 XF86Audio{Next,Prev,Play,Stop}
     MediaControl {--next,--previous,--toggle,--stop}
 
-# Volume control (F-keys)
+# Desktop-only F-key controls. SMBIOS desktop chassis types are 3,4,5,6,7,13,15,16,24,34,35,36.
+# Laptops use the XF86 hardware keysyms above.
 super + {F1,F2,F3}
-    Volume {--dec,--inc,--toggle}
+    grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null && Volume {--dec,--inc,--toggle}
 
-# Brightness control (F-keys)
+# Desktop brightness controls
 super + {F5,F6}
-    sh Brightness {down,up}
+    grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null && sh Brightness {down,up}
 
-# Redshift blue light filter (toggle)
+# Desktop Redshift control
 super + F9
-    Redshift --toggle
+    grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null && Redshift --toggle
 
 #####################
 # ----- Bspwm ----- #
@@ -151,7 +160,7 @@ super + F9
 
 # Reload BSPWM
 super + alt + r
-    bspc wm -r
+    if grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null; then bspc wm -r; else Redshift --toggle; fi
 
 # Close/Kill node
 super + {_,shift + }x
