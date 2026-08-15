@@ -129,12 +129,13 @@ XF86MonBrightness{Up,Down}
 XF86Audio{RaiseVolume,LowerVolume,Mute}
     Volume{ --inc, --dec, --toggle}
 
-# Microphone mute (laptop)
+# Microphone mute
 XF86AudioMicMute
-    if command -v wpctl >/dev/null 2>&1 && wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; then \
-        : \
-    elif command -v pactl >/dev/null 2>&1; then \
-        pactl set-source-mute @DEFAULT_SOURCE@ toggle; \
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; \
+    if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED; then \
+        dunstify -u low -t 1500 -h string:x-dunst-stack-tag:micmute -i microphone-sensitivity-muted 'Microphone' 'Muted'; \
+    else \
+        dunstify -u low -t 1500 -h string:x-dunst-stack-tag:micmute -i microphone-sensitivity-high 'Microphone' 'Unmuted'; \
     fi
 
 # Music Control
@@ -150,17 +151,17 @@ super + {F1,F2,F3}
 super + {F5,F6}
     grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null && sh Brightness {down,up}
 
-# Desktop Redshift control
-super + F9
-    grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null && Redshift --toggle
-
 #####################
 # ----- Bspwm ----- #
 #####################
 
 # Reload BSPWM
 super + alt + r
-    if grep -qE '^(3|4|5|6|7|13|15|16|24|34|35|36)$' /sys/class/dmi/id/chassis_type 2>/dev/null; then bspc wm -r; else Redshift --toggle; fi
+    bspc wm -r
+
+# Toggle Redshift
+super + shift + r
+    "$HOME"/.config/bspwm/eww/profilecard/scripts/Redshift toggle
 
 # Close/Kill node
 super + {_,shift + }x
