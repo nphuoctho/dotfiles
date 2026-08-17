@@ -79,6 +79,9 @@ keymap = [
 	{ on = "r",         run = "rename --cursor=before_ext",  desc = "Rename selected file(s)" },
 	{ on = ";",         run = "shell --interactive",         desc = "Run a shell command" },
 	{ on = ":",         run = "shell --block --interactive", desc = "Run a shell command (block until finishes)" },
+	{ on = "!",         run = 'shell "$SHELL" --block',       desc = "Open a shell in the current directory" },
+	# Compress: ouch infers the format from the extension you type (.zip .7z .tar.gz .zst ...); rar creation is unsupported by ouch
+	{ on = "C",         run = "shell 'ouch compress \"$@\" ' --block --interactive", desc = "Compress selection with ouch (choose format by extension)" },
 	{ on = ".",         run = "hidden toggle",               desc = "Toggle the visibility of hidden files" },
 	{ on = "s",         run = "search --via=fd",             desc = "Search files by name via fd" },
 	{ on = "S",         run = "search --via=rg",             desc = "Search files by content via ripgrep" },
