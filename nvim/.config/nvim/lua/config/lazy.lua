@@ -81,6 +81,6 @@ require("lazy").setup({
     },
   },
 })
-
--- LazyVim delays clipboard until VeryLazy; yanks right after startup miss the + register.
+-- LazyVim temporarily clears the option during setup to defer clipboard I/O.
+-- Restore it immediately; config.options makes VeryLazy restore the same value.
 vim.opt.clipboard = "unnamedplus"
