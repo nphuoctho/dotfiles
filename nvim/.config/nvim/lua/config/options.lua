@@ -1,11 +1,6 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 
--- Keep clipboard behavior correct in both local and SSH sessions.
--- Over SSH, OSC 52 sends yanks to the terminal on the client machine;
--- xclip would otherwise target the remote DISPLAY.
-if vim.env.SSH_CONNECTION then
-  vim.g.clipboard = "osc52"
-end
+-- This config runs on a local PC; use the native desktop clipboard.
 vim.opt.clipboard = "unnamedplus"
 
 -- TypeScript LSP: "vtsls" (stable) or "tsgo" (~10x faster, still experimental).
