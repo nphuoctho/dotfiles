@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   end,
 })
 
--- vtsls: disable formatting (conform/Prettier handles it) + TS-specific keymaps
+-- vtsls: delegate formatting to conform and handle its VS Code-only import callback.
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("user_vtsls_attach", { clear = true }),
   callback = function(args)
@@ -30,6 +30,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
+
+    -- vtsls resolves `source.organizeImports` with this acknowledgment after
+    -- returning the workspace edit. Neovim applies the edit itself.
+    client.commands["_typescript.didOrganizeImports"] = function() end
 
     local function exec_cmd(cmd)
       client:exec_cmd({
@@ -48,9 +52,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>cu", function()
       exec_cmd("typescript.removeUnusedImports")
     end, "Remove Unused Imports")
-    map("<leader>co", function()
-      exec_cmd("typescript.organizeImports")
-    end, "Organize Imports")
     map("<leader>cA", function()
       vim.lsp.buf.code_action({
         apply = true,

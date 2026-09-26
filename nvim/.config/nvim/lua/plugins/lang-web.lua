@@ -5,20 +5,20 @@ return {
     opts = {
       servers = {
         vtsls = {
-          vtsls = {
-            autoUseWorkspaceTsdk = true,
-            experimental = {
-              completion = {
-                enableServerSideFuzzyMatch = true,
-                entriesLimit = 200,
-              },
-              maxInlayHintLength = 30,
-            },
-            enableMoveToFileCodeAction = true,
-          },
 
           ---@type lspconfig.settings.vtsls
           settings = {
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+              experimental = {
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                  entriesLimit = 50,
+                },
+                maxInlayHintLength = 30,
+              },
+              enableMoveToFileCodeAction = true,
+            },
             ["typescript.format.enable"] = false,
             ["javascript.format.enable"] = false,
             ["typescript.validate.enable"] = true,
@@ -26,11 +26,6 @@ return {
             ["typescript.suggestionActions.enabled"] = false,
             ["javascript.suggestionActions.enabled"] = false,
 
-            -- Suppress codes already handled by ESLint
-            -- 6133/6196/6198/6192: unused / declared-but-never-used
-            -- 80001: require → import
-            -- 80004: let → const
-            ["typescript.tsserver.ignoredCodes"] = { 6133, 6196, 6198, 6192, 80001, 80004 },
 
             typescript = {
               preferences = {
@@ -40,7 +35,7 @@ return {
                 preferTypeOnlyAutoImports = true,
                 renameMatchingJsxTags = true,
                 useAliasesForRenames = false,
-                includePackageJsonAutoImports = "auto",
+                includePackageJsonAutoImports = "off",
                 organizeImports = {
                   caseSensitivity = "auto",
                   typeOrder = "first",
@@ -127,6 +122,7 @@ return {
       inlay_hints = { enabled = true },
     },
   },
+
 
   {
     "mason-org/mason.nvim",

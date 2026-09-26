@@ -10,7 +10,6 @@ local map = function(mode, lhs, rhs, desc, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-map("i", "jk", "<Esc>", "Exit insert mode")
 
 map("n", "<leader>K", "<CMD>ShowkeysToggle<CR>", "Toggle Show Keys")
 
@@ -57,7 +56,7 @@ vim.api.nvim_create_user_command("SafeSource", function(opts)
       )
     end
   else
-    vim.cmd("source " .. target)
+    vim.cmd({ cmd = "source", args = { target } })
     vim.notify("Sourced " .. target, vim.log.levels.INFO, { title = "Source" })
   end
 end, { nargs = "?", complete = "file", desc = "Safely source file/buffer" })
@@ -81,8 +80,10 @@ map("n", "<leader>cx", function()
     exe = has_uv and "uv run python" or "python"
   elseif ft == "lua" then
     exe = "lua"
-  elseif ft == "sh" or ft == "bash" or ft == "zsh" then
+  elseif ft == "sh" or ft == "bash" then
     exe = "bash"
+  elseif ft == "zsh" then
+    exe = "zsh"
   elseif ft == "go" then
     exe = "go run"
   else
