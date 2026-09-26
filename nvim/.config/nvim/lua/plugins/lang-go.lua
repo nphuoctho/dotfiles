@@ -40,18 +40,10 @@ return {
               completeUnimported = true,
               staticcheck = true,
               directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-              -- off to dodge LazyVim's broken workaround
-              semanticTokens = false,
             },
           },
         },
         templ = {}, -- templ LSP for htmx/web
-      },
-      setup = {
-        -- override LazyVim's workaround
-        gopls = function(_, _)
-          return false
-        end,
       },
     },
   },
