@@ -172,6 +172,9 @@ alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
 alias music="ncmpcpp"
 
+# Open omp in AIChat dir (subshell keeps current shell cwd)
+chat() { (cd ~/Documents/AIChat && omp "$@"); }
+
 alias cat="bat --theme=base16"
 alias ls='eza --icons=always --color=always -a'
 alias ll='eza --icons=always --color=always -la'
