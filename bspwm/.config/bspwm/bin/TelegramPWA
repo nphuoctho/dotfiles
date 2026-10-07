@@ -3,12 +3,11 @@
 # Script Name: TelegramPWA
 # Description: Run the Telegram Web PWA (Chromium app window) like
 #              a background chat app under bspwm: start hidden at
-#              login, toggle show/hide, hide instead of close.
+#              login, toggle show/hide.
 #
-# Usage: TelegramPWA {start [--hidden]|toggle|show|hide|close}
+# Usage: TelegramPWA {start [--hidden]|toggle|show|hide}
 #   start [--hidden]  launch if not running (optionally hide it)
 #   toggle            launch/show/focus/hide
-#   close [-c|-k]     hide the PWA if focused, otherwise bspc node -c (or -k)
 #
 # The PWA window must stay alive (hidden != closed) so the page keeps
 # its MTProto connection and keeps raising desktop notifications.
@@ -86,16 +85,8 @@ case "$1" in
 	hide)
 		wid=$(find_wid) && hide "$wid"
 		;;
-	close)
-		wid=$(find_wid)
-		if [ -n "$wid" ] && [ "$(bspc query -N -n focused)" = "$wid" ]; then
-			hide "$wid"
-		else
-			bspc node "${2:--c}"
-		fi
-		;;
 	*)
-		echo "Usage: TelegramPWA {start [--hidden]|toggle|show|hide|close [-c|-k]}" >&2
+		echo "Usage: TelegramPWA {start [--hidden]|toggle|show|hide}" >&2
 		exit 1
 		;;
 esac
