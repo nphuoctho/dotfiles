@@ -162,9 +162,9 @@ super + alt + r
 super + shift + r
     "$HOME"/.config/bspwm/eww/profilecard/scripts/Redshift toggle
 
-# Close/Kill node (Telegram PWA is hidden instead of closed)
+# Close/Kill node (shift+x hides the Telegram PWA instead of killing it)
 super + {_,shift + }x
-    {TelegramPWA close,bspc node -k}
+    {bspc node -c,TelegramPWA close -k}
 
 # Reload sxhkd Keybinds
 super + Escape

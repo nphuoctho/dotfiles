@@ -8,7 +8,7 @@
 # Usage: TelegramPWA {start [--hidden]|toggle|show|hide|close}
 #   start [--hidden]  launch if not running (optionally hide it)
 #   toggle            launch/show/focus/hide
-#   close             hide the PWA if focused, otherwise bspc node -c
+#   close [-c|-k]     hide the PWA if focused, otherwise bspc node -c (or -k)
 #
 # The PWA window must stay alive (hidden != closed) so the page keeps
 # its MTProto connection and keeps raising desktop notifications.
@@ -91,11 +91,11 @@ case "$1" in
 		if [ -n "$wid" ] && [ "$(bspc query -N -n focused)" = "$wid" ]; then
 			hide "$wid"
 		else
-			bspc node -c
+			bspc node "${2:--c}"
 		fi
 		;;
 	*)
-		echo "Usage: TelegramPWA {start [--hidden]|toggle|show|hide|close}" >&2
+		echo "Usage: TelegramPWA {start [--hidden]|toggle|show|hide|close [-c|-k]}" >&2
 		exit 1
 		;;
 esac
