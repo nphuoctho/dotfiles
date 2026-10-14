@@ -42,7 +42,7 @@ start() {
 	}
 
 	mkdir -p "$(dirname "$LOG_FILE")"
-	x11vnc -display "${DISPLAY:-:0}" -auth "$HOME/.Xauthority" \
+	x11vnc -display "${DISPLAY:-:0}" -auth "${XAUTHORITY:-$HOME/.Xauthority}" \
 		-rfbauth "$PASSWD_FILE" -localhost -rfbport "$PORT" \
 		-forever -shared -noxdamage -repeat \
 		-bg -o "$LOG_FILE" >/dev/null 2>&1
