@@ -84,9 +84,7 @@ run clipcatd
 # Launch polkit
 run lxpolkit
 
-# Per-host autostart. TelegramPWA hardcodes this desktop's Chromium profile and
-# RemoteDesktop exposes the session, so neither may run on other machines.
-# Both are no-ops when already running.
+# Desktop only: Telegram uses this PC's Chromium profile, VNC shares the screen
 case "$(uname -n)" in
 Thoros)
   TelegramPWA start --hidden &
