@@ -1,0 +1,83 @@
+#!/bin/sh
+# =============================================================
+# Script Name: RemoteDesktop
+# Description: Share the running X session (display :0) over VNC with
+#              x11vnc so it can be reached with Remmina through Tailscale.
+#
+# Usage: RemoteDesktop {start|stop|status}
+#
+# x11vnc listens on loopback only (-localhost). LibVNCServer opens
+# [::]:PORT on its own and ignores "-listen <ip>", "-no6" and "-noipv6",
+# so binding to the Tailscale IP still leaves the port open on every
+# IPv6 address. Loopback is the only bind that is closed by default.
+#
+# The tailnet side is a one-time root step (persists across reboots):
+#   sudo tailscale serve --bg --tcp 5900 tcp://127.0.0.1:5900
+# Remmina (VNC) then connects to <tailscale-ip-or-magicdns-name>:5900.
+#
+# One-time password setup:  x11vnc -storepasswd ~/.vnc/passwd
+# =============================================================
+
+PORT=5900
+PASSWD_FILE="$HOME/.vnc/passwd"
+LOG_FILE="$HOME/.vnc/x11vnc.log"
+
+is_running() {
+	pgrep -u "$(id -u)" -x x11vnc >/dev/null
+}
+
+is_listening() {
+	ss -H -tln "sport = :$PORT" | grep -q "127.0.0.1:$PORT"
+}
+
+start() {
+	if is_running; then
+		echo "x11vnc already running"
+		return 0
+	fi
+	command -v x11vnc >/dev/null || { echo "x11vnc not installed" >&2; return 1; }
+	[ -r "$PASSWD_FILE" ] || {
+		echo "Missing $PASSWD_FILE (run: x11vnc -storepasswd $PASSWD_FILE)" >&2
+		return 1
+	}
+
+	mkdir -p "$(dirname "$LOG_FILE")"
+	x11vnc -display "${DISPLAY:-:0}" -auth "${XAUTHORITY:-$HOME/.Xauthority}" \
+		-rfbauth "$PASSWD_FILE" -localhost -rfbport "$PORT" \
+		-forever -shared -noxdamage -repeat \
+		-bg -o "$LOG_FILE" >/dev/null 2>&1
+
+	i=0
+	while [ "$i" -lt 50 ]; do
+		is_listening && { echo "x11vnc listening on 127.0.0.1:$PORT"; return 0; }
+		sleep 0.1
+		i=$((i + 1))
+	done
+	echo "x11vnc failed to listen on 127.0.0.1:$PORT, see $LOG_FILE" >&2
+	return 1
+}
+
+stop() {
+	is_running || { echo "x11vnc not running"; return 0; }
+	pkill -u "$(id -u)" -x x11vnc
+}
+
+status() {
+	if is_running; then
+		echo "x11vnc running (pid $(pgrep -u "$(id -u)" -x x11vnc | tr '\n' ' '))"
+	else
+		echo "x11vnc not running"
+		return 1
+	fi
+	is_listening && echo "listening on 127.0.0.1:$PORT" || echo "not listening on 127.0.0.1:$PORT"
+}
+
+case "$1" in
+start) start ;;
+stop) stop ;;
+status) status ;;
+*)
+	echo "Usage: ${0##*/} {start|stop|status}" >&2
+	exit 1
+	;;
+esac
