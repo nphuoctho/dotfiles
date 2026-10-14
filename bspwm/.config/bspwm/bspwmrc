@@ -88,7 +88,7 @@ run lxpolkit
 TelegramPWA start --hidden &
 
 # Share the X session over VNC on loopback (desktop only; no-op if already running)
-[ "$(hostname)" = "Thoros" ] && RemoteDesktop start &
+[ "$(uname -n)" = "Thoros" ] && RemoteDesktop start &
 
 # Start one time message
 [ ! -f "$HOME/.config/bspwm/config/.first_run_done" ] && eww -c ${HOME}/.config/bspwm/eww open --toggle welcome && touch "$HOME/.config/bspwm/config/.first_run_done"
