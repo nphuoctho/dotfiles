@@ -38,9 +38,13 @@ super + {b,e,f}
 super + {y,v,m}
     OpenApps --{yazi,nvim,music}
 
-# Media apps (Pavucontrol, Telegram, Whatsapp)
-super + {p,t,w}
-    OpenApps --{soundcontrol,telegram,whats}
+# Media apps (Pavucontrol, Whatsapp)
+super + {p,w}
+    OpenApps --{soundcontrol,whats}
+
+# Telegram PWA (launch / show / hide)
+super + t
+    TelegramPWA toggle
 
 # Rice Editor App
 super + r

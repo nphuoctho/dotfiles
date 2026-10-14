@@ -1,0 +1,92 @@
+#!/bin/sh
+# =============================================================
+# Script Name: TelegramPWA
+# Description: Run the Telegram Web PWA (Chromium app window) like
+#              a background chat app under bspwm: start hidden at
+#              login, toggle show/hide.
+#
+# Usage: TelegramPWA {start [--hidden]|toggle|show|hide}
+#   start [--hidden]  launch if not running (optionally hide it)
+#   toggle            launch/show/focus/hide
+#
+# The PWA window must stay alive (hidden != closed) so the page keeps
+# its MTProto connection and keeps raising desktop notifications.
+# =============================================================
+
+APP_ID="ibblmnobmgdmpoeblocemifbpglakpoi"
+PROFILE="Profile 11"
+WM_INSTANCE="crx_$APP_ID"
+
+# Keep renderer timers/network un-throttled while the window is hidden.
+# Only effective when this call starts the Chromium browser process.
+launch() {
+	setsid -f chromium \
+		--profile-directory="$PROFILE" \
+		--app-id="$APP_ID" \
+		--disable-background-timer-throttling \
+		--disable-renderer-backgrounding \
+		--disable-backgrounding-occluded-windows \
+		>/dev/null 2>&1
+}
+
+find_wid() {
+	id=$(xdotool search --classname "$WM_INSTANCE" 2>/dev/null | head -n 1)
+	[ -n "$id" ] && printf '0x%08X\n' "$id"
+}
+
+wait_wid() {
+	i=0
+	while [ "$i" -lt 150 ]; do
+		wid=$(find_wid) && [ -n "$wid" ] && { echo "$wid"; return 0; }
+		sleep 0.2
+		i=$((i + 1))
+	done
+	return 1
+}
+
+hide() {
+	bspc node "$1" -g hidden=on
+}
+
+show() {
+	bspc node "$1" -g hidden=off
+	bspc node "$1" -d focused --follow
+	bspc node "$1" -f
+}
+
+case "$1" in
+	start)
+		wid=$(find_wid)
+		if [ -z "$wid" ]; then
+			launch
+			wid=$(wait_wid) || exit 1
+			[ "$2" = "--hidden" ] && hide "$wid"
+		fi
+		;;
+	toggle)
+		wid=$(find_wid)
+		if [ -z "$wid" ]; then
+			launch
+			wid=$(wait_wid) || exit 1
+			show "$wid"
+		elif bspc query -N -n "$wid.hidden" >/dev/null 2>&1; then
+			show "$wid"
+		elif [ "$(bspc query -N -n focused)" = "$wid" ]; then
+			hide "$wid"
+		else
+			bspc node "$wid" -d focused --follow
+			bspc node "$wid" -f
+		fi
+		;;
+	show)
+		wid=$(find_wid) || { launch; wid=$(wait_wid) || exit 1; }
+		show "$wid"
+		;;
+	hide)
+		wid=$(find_wid) && hide "$wid"
+		;;
+	*)
+		echo "Usage: TelegramPWA {start [--hidden]|toggle|show|hide}" >&2
+		exit 1
+		;;
+esac
