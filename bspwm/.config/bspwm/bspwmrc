@@ -84,11 +84,13 @@ run clipcatd
 # Launch polkit
 run lxpolkit
 
-# Launch Telegram PWA hidden in the background (no-op if already running)
-TelegramPWA start --hidden &
-
-# Share the X session over VNC on loopback (desktop only; no-op if already running)
-[ "$(uname -n)" = "Thoros" ] && RemoteDesktop start &
+# Desktop only: Telegram uses this PC's Chromium profile, VNC shares the screen
+case "$(uname -n)" in
+Thoros)
+  TelegramPWA start --hidden &
+  RemoteDesktop start &
+  ;;
+esac
 
 # Start one time message
 [ ! -f "$HOME/.config/bspwm/config/.first_run_done" ] && eww -c ${HOME}/.config/bspwm/eww open --toggle welcome && touch "$HOME/.config/bspwm/config/.first_run_done"
