@@ -16,11 +16,15 @@
 # Remmina (VNC) then connects to <tailscale-ip-or-magicdns-name>:5900.
 #
 # One-time password setup:  x11vnc -storepasswd ~/.vnc/passwd
+#
+# Only one monitor is shared (-clip). Default: first Xinerama screen (xinerama0).
+# Override with VNC_CLIP, e.g. xinerama1 or 1920x1080+1920+0 (WxH+X+Y).
 # =============================================================
 
 PORT=5900
 PASSWD_FILE="$HOME/.vnc/passwd"
 LOG_FILE="$HOME/.vnc/x11vnc.log"
+CLIP="${VNC_CLIP:-xinerama0}"
 
 is_running() {
 	pgrep -u "$(id -u)" -x x11vnc >/dev/null
@@ -40,11 +44,19 @@ start() {
 		echo "Missing $PASSWD_FILE (run: x11vnc -storepasswd $PASSWD_FILE)" >&2
 		return 1
 	}
+	# x11vnc silently ignores a bad -clip and would share every monitor.
+	case "$CLIP" in
+	xinerama[0-9] | [0-9]*x[0-9]*+[0-9]*+[0-9]*) ;;
+	*)
+		echo "Invalid VNC_CLIP '$CLIP' (use xineramaN or WxH+X+Y)" >&2
+		return 1
+		;;
+	esac
 
 	mkdir -p "$(dirname "$LOG_FILE")"
 	x11vnc -display "${DISPLAY:-:0}" -auth "${XAUTHORITY:-$HOME/.Xauthority}" \
 		-rfbauth "$PASSWD_FILE" -localhost -rfbport "$PORT" \
-		-forever -shared -noxdamage -repeat \
+		-forever -shared -noxdamage -repeat -clip "$CLIP" \
 		-bg -o "$LOG_FILE" >/dev/null 2>&1
 
 	i=0
