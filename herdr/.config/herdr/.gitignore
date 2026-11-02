@@ -3,3 +3,5 @@ herdr-server.log
 session.json
 .plugins.lock
 release-notes.json
+session-snapshots/
+sessions/

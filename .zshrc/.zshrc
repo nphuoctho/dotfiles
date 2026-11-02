@@ -34,11 +34,6 @@ if [[ -d "$HOME/Android/Sdk" ]]; then
   fi
 fi
 
-# Java 17
-if [[ -d "/usr/lib/jvm/java-17-openjdk" ]]; then
-  export JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
-  export PATH="$JAVA_HOME/bin:$PATH"
-fi
 
 #  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
 #  │  │ │├─┤ ││  ├┤ ││││ ┬││││├┤
@@ -193,7 +188,7 @@ glow() {
 #  ┌─┐┬ ┬┌┬┐┌─┐  ┌─┐┌┬┐┌─┐┬─┐┌┬┐
 #  ├─┤│ │ │ │ │  └─┐ │ ├─┤├┬┘ │
 #  ┴ ┴└─┘ ┴ └─┘  └─┘ ┴ ┴ ┴┴└─ ┴
-$HOME/.local/bin/colorscript -r
+#$HOME/.local/bin/colorscript -r
 #disable-fzf-tab
 
 # ===============================

@@ -87,7 +87,7 @@ run lxpolkit
 # Desktop only: Telegram uses this PC's Chromium profile, VNC shares the screen
 case "$(uname -n)" in
 Thoros)
-  TelegramPWA start --hidden &
+  # TelegramPWA start --hidden &  # disabled: avoid Chromium autostart
   RemoteDesktop start &
   ;;
 esac
