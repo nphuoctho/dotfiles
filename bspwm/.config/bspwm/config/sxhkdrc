@@ -158,10 +158,6 @@ super + {F1,F2,F3}
 super + alt + r
     bspc wm -r
 
-# Toggle Redshift
-super + shift + r
-    "$HOME"/.config/bspwm/eww/profilecard/scripts/Redshift toggle
-
 # Close/Kill node
 super + {_,shift + }x
     bspc node -{c,k}
