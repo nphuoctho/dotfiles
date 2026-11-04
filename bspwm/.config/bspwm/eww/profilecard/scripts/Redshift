@@ -1,0 +1,48 @@
+#!/bin/sh
+# =============================================================
+# Script to toogle redshift in my eww widget.
+# Toggles the redshift daemon; temperatures come from
+# ~/.config/redshift/redshift.conf (no manual -O override).
+# gh0stzk | https://github.com/gh0stzk/dotfiles
+# 11.07.2024 13:24:18
+# Copyright (C) 2021-2025 gh0stzk <z0mbi3.zk@protonmail.com>
+# =============================================================
+
+is_running() {
+	pgrep -x redshift >/dev/null 2>&1
+}
+
+get_state() {
+	if is_running; then
+		echo on
+	else
+		echo off
+	fi
+}
+
+disable_redshift() {
+	pkill -x redshift >/dev/null 2>&1
+	n=0
+	while is_running && [ "$n" -lt 25 ]; do
+		sleep 0.2
+		n=$((n + 1))
+	done
+	redshift -x >/dev/null 2>&1
+}
+
+enable_redshift() {
+	is_running || setsid -f redshift >/dev/null 2>&1
+}
+
+toggle() {
+	if is_running; then
+		disable_redshift
+	else
+		enable_redshift
+	fi
+}
+
+case $1 in
+    state) get_state ;;
+    toggle) toggle ;;
+esac
