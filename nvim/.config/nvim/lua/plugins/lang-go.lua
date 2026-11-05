@@ -90,6 +90,16 @@ return {
     end,
   },
 
+  -- LazyVim lints on BufReadPost/InsertLeave/BufWritePost (all filetypes). golangci-lint spawns a
+  -- whole-package run (~1-3 s of CPU) each time, so lint on save only (also applies to hadolint,
+  -- markdownlint-cli2, fish).
+  {
+    "mfussenegger/nvim-lint",
+    opts = function(_, opts)
+      opts.events = { "BufWritePost" }
+    end,
+  },
+
   -- DAP Go
   {
     "leoluz/nvim-dap-go",

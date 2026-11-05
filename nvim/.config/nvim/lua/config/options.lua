@@ -16,3 +16,8 @@ vim.g.lazyvim_python_ruff = "ruff"
 
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_cmp = "blink.cmp"
+
+-- Keep navic as the only breadcrumb source. LazyVim's default trouble symbols statusline
+-- re-filters every document symbol on each cursor move (largest self-time in :profile of
+-- plain `j` in a 4k-line TS file) and, while enabled, the navic extra's lualine component is skipped.
+vim.g.trouble_lualine = false
