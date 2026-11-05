@@ -19,15 +19,12 @@ return {
               },
               enableMoveToFileCodeAction = true,
             },
-            ["typescript.format.enable"] = false,
-            ["javascript.format.enable"] = false,
-            ["typescript.validate.enable"] = true,
-            ["javascript.validate.enable"] = true,
-            ["typescript.suggestionActions.enabled"] = false,
-            ["javascript.suggestionActions.enabled"] = false,
-
-
             typescript = {
+              -- Nested (not dotted root keys): Neovim resolves workspace/configuration
+              -- sections with tbl_get(settings, "typescript", ...), so dotted keys are ignored.
+              format = { enable = false },
+              validate = { enable = true },
+              suggestionActions = { enabled = false },
               preferences = {
                 importModuleSpecifier = "non-relative",
                 importModuleSpecifierEnding = "auto",
@@ -35,7 +32,7 @@ return {
                 preferTypeOnlyAutoImports = true,
                 renameMatchingJsxTags = true,
                 useAliasesForRenames = false,
-                includePackageJsonAutoImports = "off",
+                includePackageJsonAutoImports = "auto",
                 organizeImports = {
                   caseSensitivity = "auto",
                   typeOrder = "first",
@@ -81,6 +78,9 @@ return {
             },
 
             javascript = {
+              format = { enable = false },
+              validate = { enable = true },
+              suggestionActions = { enabled = false },
               preferences = {
                 importModuleSpecifier = "non-relative",
                 importModuleSpecifierEnding = "auto",
@@ -123,15 +123,43 @@ return {
     },
   },
 
-
+  -- The oxc extra appends oxfmt to every JS/TS ft with no condition, so each save ran
+  -- oxfmt then prettier. Use oxfmt only in projects with an oxfmt config; otherwise prettier.
   {
-    "mason-org/mason.nvim",
+    "stevearc/conform.nvim",
+    optional = true,
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, {
-        "prettier",
-        "eslint-lsp",
-        "css-lsp",
-        "tailwindcss-language-server",
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      local has_fallback = {}
+      for _, ft in ipairs({
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "json",
+        "jsonc",
+        "vue",
+        "svelte",
+        "astro",
+      }) do
+        local list = vim.tbl_filter(function(f)
+          return type(f) == "string" and f ~= "oxfmt"
+        end, opts.formatters_by_ft[ft] or {})
+        if #list > 0 then
+          has_fallback[ft] = true
+          opts.formatters_by_ft[ft] = vim.list_extend({ "oxfmt" }, list)
+          opts.formatters_by_ft[ft].stop_after_first = true
+        end
+      end
+
+      opts.formatters = opts.formatters or {}
+      opts.formatters.oxfmt = vim.tbl_deep_extend("force", opts.formatters.oxfmt or {}, {
+        condition = function(_, ctx)
+          if not has_fallback[vim.bo[ctx.buf].filetype] then
+            return true
+          end
+          return vim.fs.root(ctx.dirname, { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" }) ~= nil
+        end,
       })
     end,
   },
