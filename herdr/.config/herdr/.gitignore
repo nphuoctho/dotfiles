@@ -5,3 +5,6 @@ session.json
 release-notes.json
 session-snapshots/
 sessions/
+plugins/
+plugins.json
+config.toml.bak-*
