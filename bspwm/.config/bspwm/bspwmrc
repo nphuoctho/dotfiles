@@ -87,6 +87,11 @@ run clipcatd
 # Launch polkit
 run lxpolkit
 
+# The event to make Layouts work with polybar
+bspc subscribe desktop_focus monitor_focus | while read -r _; do
+    polybar-msg action "#layout.hook.0" >/dev/null 2>&1
+done &
+
 # Desktop only: Telegram uses this PC's Chromium profile, VNC shares the screen
 case "$(uname -n)" in
 Thoros)
