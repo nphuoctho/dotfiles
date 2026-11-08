@@ -53,6 +53,10 @@ return {
         "goimports-reviser", -- sort imports by group (std / 3rd / local)
         "templ", -- templ LSP
       })
+      -- not used any more (see nvim-lint block below), so do not keep installing it
+      opts.ensure_installed = vim.tbl_filter(function(tool)
+        return tool ~= "golangci-lint"
+      end, opts.ensure_installed)
     end,
   },
 
@@ -65,7 +69,7 @@ return {
     end,
   },
 
-  -- Conform: use goimports-reviser instead of the default goimports
+  -- Conform: goimports (add/remove imports) -> goimports-reviser (group them) -> gofumpt
   {
     "stevearc/conform.nvim",
     optional = true,

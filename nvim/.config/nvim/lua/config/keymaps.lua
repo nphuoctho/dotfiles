@@ -92,7 +92,7 @@ map("n", "<leader>cx", function()
     argv = {
       "sh",
       "-c",
-      cc .. ' -g -O2 -Wall -Wextra -fsanitize=address,undefined "$1" -o "$2" && "$2"',
+      cc .. ' -g -O2 -Wall -Wextra -fsanitize=address,undefined "$1" -o "$2"' .. (ft == "c" and " -lm" or "") .. ' && "$2"',
       "sh",
       file,
       out,

@@ -11,7 +11,7 @@ return {
             "--clang-tidy",
             "--header-insertion=iwyu",
             "--completion-style=detailed",
-            "--function-arg-placeholders",
+            "--function-arg-placeholders=1", -- bare flag is rejected by clangd >= 22 ("Provide a boolean")
             "--fallback-style=llvm",
             "--log=error", -- default --log=info floods lsp.log (4 lines per completion)
             -- add for big projects:
