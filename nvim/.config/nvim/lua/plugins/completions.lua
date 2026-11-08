@@ -34,7 +34,7 @@ return {
 
         list = {
           selection = {
-            preselect = true, -- highlight the first item
+            preselect = false, -- true made Tab skip item 1 and Enter insert it instead of a newline
             auto_insert = false, -- wait for <CR> to insert
           },
         },

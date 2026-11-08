@@ -8,12 +8,19 @@ vim.opt.clipboard = "unnamedplus"
 -- vtsls: has refactors (extract/move) but tsserver cold start is 3-12s. Override: `NVIM_TS_LSP=vtsls nvim`.
 vim.g.lazyvim_ts_lsp = (vim.env.NVIM_TS_LSP and vim.env.NVIM_TS_LSP ~= "") and vim.env.NVIM_TS_LSP or "tsc"
 
--- Python LSP: "pyright" (default) or "basedpyright" (stricter community fork).
--- Pick basedpyright if you want real type checking.
-vim.g.lazyvim_python_lsp = "basedpyright"
+-- Python LSP: "pyrefly" (default) or "basedpyright" (`NVIM_PY_LSP=basedpyright nvim`).
+-- Measured on real uv projects: pyrefly attaches in ~5 ms (basedpyright ~180 ms), cold first completion
+-- 70-580 ms (1.1-1.8 s), RSS ~180-280 MB (~600 MB), and it offers auto-imports (`from fastapi import
+-- FastAPI`, `import pandas as pd`) that basedpyright never does for packages no open file imports.
+-- Costs: more background CPU on >50-file projects, cross-file rename/references incomplete for ~8 s
+-- after opening, bundled .pyi go-to-definition for pandas.
+vim.g.lazyvim_python_lsp = (vim.env.NVIM_PY_LSP and vim.env.NVIM_PY_LSP ~= "") and vim.env.NVIM_PY_LSP or "pyrefly"
 
 -- Ruff: replaces flake8 + black + isort.
 vim.g.lazyvim_python_ruff = "ruff"
+
+-- Run prettier only where a prettier config exists (it reflowed compose files and markdown notes).
+vim.g.lazyvim_prettier_needs_config = true
 
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_cmp = "blink.cmp"

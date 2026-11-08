@@ -3,18 +3,14 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        pyrefly = {
+          -- pyrefly logs INFO to stderr and nvim stores every stderr line in lsp.log at ERROR level
+          cmd_env = { PYREFLY_LOG = "error" },
+          -- The LSP default preset is "basic", which drops bad-assignment / missing-attribute /
+          -- missing-argument errors; "default" matches basedpyright's "basic" in head-to-head tests.
+          init_options = { pyrefly = { typeCheckingMode = "default" } },
+        },
         basedpyright = {
-          -- Prefer the project's .venv interpreter so imports/completion resolve
-          -- against installed deps; fall back to system python when absent.
-          before_init = function(_, config)
-            local root = config.root_dir or vim.fn.getcwd()
-            local py = root .. "/.venv/bin/python"
-            if vim.uv.fs_stat(py) then
-              config.settings = config.settings or {}
-              config.settings.python = config.settings.python or {}
-              config.settings.python.pythonPath = py
-            end
-          end,
           settings = {
             basedpyright = {
               typeCheckingMode = "basic",
@@ -34,14 +30,12 @@ return {
   },
 
   {
-    "linux-cultist/venv-selector.nvim",
-    opts = {
-      settings = {
-        options = {
-          notify_user_on_activate = true,
-        },
-      },
-    },
-    ft = "python",
+    "mason-org/mason.nvim",
+    opts = function(_, opts)
+      if vim.g.lazyvim_python_lsp == "pyrefly" then
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "pyrefly")
+      end
+    end,
   },
 }

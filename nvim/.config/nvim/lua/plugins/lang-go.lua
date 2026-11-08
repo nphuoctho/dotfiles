@@ -9,7 +9,6 @@ return {
             gopls = {
               gofumpt = true,
               codelenses = {
-                gc_details = false,
                 generate = true,
                 regenerate_cgo = true,
                 run_govulncheck = true,
@@ -33,13 +32,11 @@ return {
                 unusedparams = true,
                 unusedwrite = true,
                 unusedvariable = true,
-                useany = true,
                 shadow = true,
               },
               usePlaceholders = true,
-              completeUnimported = true,
               staticcheck = true,
-              directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+              directoryFilters = { "-**/node_modules" }, -- default; a bare "-node_modules" only matched the module root
             },
           },
         },
@@ -56,6 +53,10 @@ return {
         "goimports-reviser", -- sort imports by group (std / 3rd / local)
         "templ", -- templ LSP
       })
+      -- not used any more (see nvim-lint block below), so do not keep installing it
+      opts.ensure_installed = vim.tbl_filter(function(tool)
+        return tool ~= "golangci-lint"
+      end, opts.ensure_installed)
     end,
   },
 
@@ -68,13 +69,14 @@ return {
     end,
   },
 
-  -- Conform: use goimports-reviser instead of the default goimports
+  -- Conform: goimports (add/remove imports) -> goimports-reviser (group them) -> gofumpt
   {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
       formatters_by_ft = {
-        go = { "goimports-reviser", "gofumpt" },
+        -- goimports adds/removes imports; reviser alone only regroups them (it does not add `sort`/drop `os`)
+        go = { "goimports", "goimports-reviser", "gofumpt" },
         templ = { "templ" },
       },
     },
@@ -90,13 +92,16 @@ return {
     end,
   },
 
-  -- LazyVim lints on BufReadPost/InsertLeave/BufWritePost (all filetypes). golangci-lint spawns a
-  -- whole-package run (~1-3 s of CPU) each time, so lint on save only (also applies to hadolint,
-  -- markdownlint-cli2, fish).
+  -- LazyVim lints on BufReadPost/InsertLeave/BufWritePost (all filetypes); lint on save only
+  -- (hadolint, markdownlint-cli2, fish). golangci-lint is dropped for Go: the mason build (go1.26) and
+  -- even a fresh `go install` (v2.13, x/tools too old) cannot read go1.27 stdlib export data, so it
+  -- reports bogus `typecheck: could not import fmt` errors or exits 3. gopls analyzers + staticcheck remain.
   {
     "mfussenegger/nvim-lint",
     opts = function(_, opts)
       opts.events = { "BufWritePost" }
+      opts.linters_by_ft = opts.linters_by_ft or {}
+      opts.linters_by_ft.go = nil
     end,
   },
 
@@ -104,9 +109,9 @@ return {
   {
     "leoluz/nvim-dap-go",
     keys = {
-      { "<leader>dg", "", desc = "+Go DAP", ft = "go" },
+      { "<leader>dG", "", desc = "+Go DAP", ft = "go" }, -- <leader>dg is dap.core "Go to Line"
       {
-        "<leader>dgt",
+        "<leader>dGt",
         function()
           require("dap-go").debug_test()
         end,
@@ -114,7 +119,7 @@ return {
         ft = "go",
       },
       {
-        "<leader>dgl",
+        "<leader>dGl",
         function()
           require("dap-go").debug_last_test()
         end,
