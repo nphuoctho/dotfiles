@@ -42,6 +42,11 @@ return {
               },
             },
             typescript = {
+              -- Nested (not dotted root keys): Neovim resolves workspace/configuration
+              -- sections with tbl_get(settings, "typescript", ...), so dotted keys are ignored.
+              format = { enable = false },
+              validate = { enable = true },
+              suggestionActions = { enabled = false },
               preferences = {
                 -- "on": also offer packages that are not imported anywhere yet.
                 -- "off"/"auto" hide them in projects with many dependencies (pnpm, Nest).
@@ -69,7 +74,6 @@ return {
                 paths = true,
                 completeJSDocs = true,
               },
-              suggestionActions = { enabled = false },
               updateImportsOnFileMove = { enabled = "always" },
               preferGoToSourceDefinition = true,
               workspaceSymbols = {
@@ -204,29 +208,15 @@ return {
     },
   },
 
-  {
-    "mason-org/mason.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, {
-        "prettier",
-        "eslint-lsp",
-        "css-lsp",
-        "tailwindcss-language-server",
-      })
-      -- `tsc` (typescript@7) must be on PATH for lspconfig's tsc server; mason/bin is prepended in nvim.
-      if vim.g.lazyvim_ts_lsp == "tsc" then
-        table.insert(opts.ensure_installed, "tsc")
-      end
-    end,
-  },
-
-  -- Formatters: Prettier is the project formatter. The oxc extra appends oxfmt unconditionally,
-  -- and oxfmt ignores .prettierrc (double quotes, width 100), so it fought Prettier and spammed errors.
+  -- The oxc extra appends oxfmt to every JS/TS ft with no condition, so each save ran
+  -- oxfmt then prettier. Use oxfmt only in projects with an oxfmt config; otherwise prettier.
   {
     "stevearc/conform.nvim",
     optional = true,
     opts = function(_, opts)
-      local fts = {
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      local has_fallback = {}
+      for _, ft in ipairs({
         "javascript",
         "javascriptreact",
         "typescript",
@@ -236,25 +226,37 @@ return {
         "vue",
         "svelte",
         "astro",
-      }
-      for _, ft in ipairs(fts) do
-        if opts.formatters_by_ft[ft] then
+      }) do
+        local list = vim.tbl_filter(function(f)
+          return type(f) == "string" and f ~= "oxfmt"
+        end, opts.formatters_by_ft[ft] or {})
+        if #list > 0 then
+          has_fallback[ft] = true
+          opts.formatters_by_ft[ft] = vim.list_extend({ "oxfmt" }, list)
           opts.formatters_by_ft[ft].stop_after_first = true
         end
       end
-      -- oxfmt only when the repo has an oxfmt config; otherwise fall through to prettier.
+
       opts.formatters = opts.formatters or {}
       opts.formatters.oxfmt = vim.tbl_deep_extend("force", opts.formatters.oxfmt or {}, {
         condition = function(_, ctx)
-          -- svelte/astro have no prettier entry in LazyVim's extra; keep oxfmt for them as before.
-          local ft = vim.bo[ctx.buf].filetype
-          if ft == "svelte" or ft == "astro" then
+          if not has_fallback[vim.bo[ctx.buf].filetype] then
             return true
           end
-          return vim.fs.root(ctx.filename, { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts", "oxfmt.config.mts" })
-            ~= nil
+          return vim.fs.root(ctx.dirname, { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" }) ~= nil
         end,
       })
+    end,
+  },
+
+  -- lspconfig's `tsc` server needs a TypeScript >= 7 `tsc` on PATH (mason/bin is prepended inside nvim).
+  {
+    "mason-org/mason.nvim",
+    opts = function(_, opts)
+      if vim.g.lazyvim_ts_lsp == "tsc" then
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "tsc")
+      end
     end,
   },
 }

@@ -16,7 +16,9 @@ return {
       vim.filetype.add({
         pattern = {
           ["docker%-compose.*%.ya?ml"] = "yaml.docker-compose",
-          ["compose.*%.ya?ml"] = "yaml.docker-compose",
+          -- compose.yaml, compose.prod.yml (not composer.yaml)
+          ["compose%.ya?ml"] = "yaml.docker-compose",
+          ["compose%..+%.ya?ml"] = "yaml.docker-compose",
         },
       })
     end,
