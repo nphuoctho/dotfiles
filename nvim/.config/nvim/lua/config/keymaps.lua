@@ -11,7 +11,7 @@ local map = function(mode, lhs, rhs, desc, opts)
 end
 
 
-map("n", "<leader>K", "<CMD>ShowkeysToggle<CR>", "Toggle Show Keys")
+map("n", "<leader>uk", "<CMD>ShowkeysToggle<CR>", "Toggle Show Keys") -- <leader>K is LazyVim Keywordprg
 
 map("n", "<leader>cy", function()
   local diags = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
@@ -66,30 +66,42 @@ vim.cmd([[
   cnoreabbrev <expr> source (getcmdtype() == ':' && getcmdpos() == 7) ? 'SafeSource' : 'source'
 ]])
 
+-- Run the current file in a terminal split. Uses jobstart({term = true}) with an argv list: the old
+-- `:terminal <cmd>` form let Vim expand `%`/`#` in file names (e.g. `1.lab#01_4.cpp`).
 map("n", "<leader>cx", function()
   vim.cmd("write")
-  local file = vim.fn.expand("%:p")
+  local file = vim.api.nvim_buf_get_name(0)
+  local dir = vim.fs.dirname(file)
   local ft = vim.bo.filetype
-  local exe
+  local argv
   if ft == "python" then
-    local root = vim.fs.find({ "pyproject.toml" }, {
-      upward = true,
-      path = vim.fn.expand("%:p:h"),
-    })[1]
-    local has_uv = root ~= nil and vim.fn.executable("uv") == 1
-    exe = has_uv and "uv run python" or "python"
+    local has_project = vim.fs.find({ "pyproject.toml" }, { upward = true, path = dir })[1] ~= nil
+    argv = (has_project and vim.fn.executable("uv") == 1) and { "uv", "run", "python", file } or { "python", file }
   elseif ft == "lua" then
-    exe = "lua"
+    argv = { "lua", file }
   elseif ft == "sh" or ft == "bash" then
-    exe = "bash"
+    argv = { "bash", file }
   elseif ft == "zsh" then
-    exe = "zsh"
+    argv = { "zsh", file }
   elseif ft == "go" then
-    exe = "go run"
+    argv = { "go", "run", file }
+  elseif ft == "c" or ft == "cpp" then
+    -- -O2 keeps timings comparable to contest judges; sanitizers catch out-of-bounds in DSA code.
+    local cc = ft == "cpp" and "g++ -std=c++23" or "gcc -std=gnu2x"
+    local out = vim.fn.tempname()
+    argv = {
+      "sh",
+      "-c",
+      cc .. ' -g -O2 -Wall -Wextra -fsanitize=address,undefined "$1" -o "$2" && "$2"',
+      "sh",
+      file,
+      out,
+    }
   else
     vim.notify("No runner for filetype: " .. ft, vim.log.levels.WARN)
     return
   end
-  vim.cmd("botright 15split | terminal " .. exe .. " " .. vim.fn.shellescape(file))
+  vim.cmd("botright 15split | enew")
+  vim.fn.jobstart(argv, { term = true, cwd = dir })
   vim.cmd("startinsert")
 end, "Execute current file")

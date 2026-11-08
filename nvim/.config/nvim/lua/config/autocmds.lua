@@ -115,3 +115,30 @@ do
     end,
   })
 end
+
+-- clangd falls back to --fallback-style=llvm when there is no .clang-format, which rewrites every
+-- Allman-style file to K&R on save (and ~/Documents/MySpace/C++ is not under git). Only autoformat C/C++
+-- when a .clang-format exists up the tree; `<leader>cf` still formats on demand.
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("user_clang_format_guard", { clear = true }),
+  pattern = { "c", "cpp" },
+  callback = function(args)
+    local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(args.buf))
+    if dir and not vim.fs.find({ ".clang-format", "_clang-format" }, { upward = true, path = dir })[1] then
+      vim.b[args.buf].autoformat = false
+    end
+  end,
+})
+
+-- nvim 0.12 enables textDocument/documentColor everywhere; lua_ls answers it after every edit
+-- (median 154 ms, max 638 ms) and Lua has no colour swatches worth that. cssls/tailwindcss are cheap
+-- and keep their swatches. (Disabling globally then re-enabling per buffer does not work.)
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("user_document_color_lua_ls", { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "lua_ls" then
+      vim.lsp.document_color.enable(false, { client_id = client.id })
+    end
+  end,
+})

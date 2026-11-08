@@ -1,4 +1,11 @@
 return {
+  -- yamlls (+ SchemaStore Compose schema) already validates compose files; the compose language
+  -- service only duplicated its YAML syntax errors.
+  {
+    "neovim/nvim-lspconfig",
+    opts = { servers = { docker_compose_language_service = { enabled = false } } },
+  },
+
   {
     "LazyVim/LazyVim",
     opts = function()
@@ -65,9 +72,37 @@ return {
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(
         opts.ensure_installed,
-        { "sql", "css", "gitcommit", "make", "gitignore", "git_config", "ssh_config", "dotenv" }
+        { "sql", "css", "gitcommit", "make", "gitignore", "git_config", "ssh_config" }
       )
       vim.treesitter.language.register("bash", "zsh")
+    end,
+  },
+
+  -- Shell: dotfile scripts (bspwmrc, polybar, ...) had no LSP/lint. bashls runs shellcheck.
+  {
+    "neovim/nvim-lspconfig",
+    opts = { servers = { bashls = {} } },
+  },
+  {
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "bash-language-server", "shellcheck" } },
+  },
+
+  -- LazyVim's markdown extra puts markdownlint-cli2 in conform's chain: once lint diagnostics exist it
+  -- runs `--fix` on save and rewrites prose (e.g. MD026 strips punctuation from headings; 11/12 real
+  -- notes changed). Keep markdownlint as a linter only (nvim-lint).
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = function(_, opts)
+      for _, ft in ipairs({ "markdown", "markdown.mdx" }) do
+        local chain = opts.formatters_by_ft and opts.formatters_by_ft[ft]
+        if chain then
+          opts.formatters_by_ft[ft] = vim.tbl_filter(function(f)
+            return f ~= "markdownlint-cli2"
+          end, chain)
+        end
+      end
     end,
   },
 }
