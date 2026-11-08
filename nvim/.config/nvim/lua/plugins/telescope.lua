@@ -20,8 +20,8 @@ return {
         "node_modules/.*",
         ".venv/.*",
         "%.git/.*",
-        "build/.*",
-        "dist/.*",
+        "^build/",
+        "^dist/",
       })
     end,
   },

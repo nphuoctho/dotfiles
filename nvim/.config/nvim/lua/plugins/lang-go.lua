@@ -9,7 +9,6 @@ return {
             gopls = {
               gofumpt = true,
               codelenses = {
-                gc_details = false,
                 generate = true,
                 regenerate_cgo = true,
                 run_govulncheck = true,
@@ -33,13 +32,11 @@ return {
                 unusedparams = true,
                 unusedwrite = true,
                 unusedvariable = true,
-                useany = true,
                 shadow = true,
               },
               usePlaceholders = true,
-              completeUnimported = true,
               staticcheck = true,
-              directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+              directoryFilters = { "-**/node_modules" }, -- default; a bare "-node_modules" only matched the module root
             },
           },
         },
@@ -74,7 +71,8 @@ return {
     optional = true,
     opts = {
       formatters_by_ft = {
-        go = { "goimports-reviser", "gofumpt" },
+        -- goimports adds/removes imports; reviser alone only regroups them (it does not add `sort`/drop `os`)
+        go = { "goimports", "goimports-reviser", "gofumpt" },
         templ = { "templ" },
       },
     },

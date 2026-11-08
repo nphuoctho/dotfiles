@@ -8,11 +8,9 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   callback = function(args)
     local lines = vim.api.nvim_buf_get_lines(args.buf, 0, 200, false)
     local text = table.concat(lines, "\n")
-    if
-      text:match(
-        "[àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđÀÁẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÈÉẺẼẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰỲÝỶỸỴĐ]"
-      )
-    then
+    -- vim.regex (not string.match): a Lua `[...]` class matches single bytes, so any multibyte
+    -- character (é, —, 日, emoji) used to switch spell off. Vietnamese-only letters: ă ơ ư đ + U+1EA0-1EF9.
+    if vim.fn.match(text, [=[\v[\u1EA0-\u1EF9ăĂơƠưƯđĐ]]=]) >= 0 then
       vim.opt_local.spell = false
     end
   end,
