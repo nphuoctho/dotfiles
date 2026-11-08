@@ -25,7 +25,7 @@ return {
   },
 
   {
-    "lpoto/telescope-docker.nvim",
+    "krisajenkins/telescope-docker.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
     keys = {
       { "<leader>fD", "<cmd>Telescope docker<cr>", desc = "Docker" },
