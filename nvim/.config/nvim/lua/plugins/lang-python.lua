@@ -4,6 +4,8 @@ return {
     opts = {
       servers = {
         pyrefly = {
+          -- pyrefly logs INFO to stderr and nvim stores every stderr line in lsp.log at ERROR level
+          cmd_env = { PYREFLY_LOG = "error" },
           -- The LSP default preset is "basic", which drops bad-assignment / missing-attribute /
           -- missing-argument errors; "default" matches basedpyright's "basic" in head-to-head tests.
           init_options = { pyrefly = { typeCheckingMode = "default" } },

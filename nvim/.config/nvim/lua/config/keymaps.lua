@@ -10,7 +10,6 @@ local map = function(mode, lhs, rhs, desc, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-
 map("n", "<leader>uk", "<CMD>ShowkeysToggle<CR>", "Toggle Show Keys") -- <leader>K is LazyVim Keywordprg
 
 map("n", "<leader>cy", function()
@@ -92,7 +91,10 @@ map("n", "<leader>cx", function()
     argv = {
       "sh",
       "-c",
-      cc .. ' -g -O2 -Wall -Wextra -fsanitize=address,undefined "$1" -o "$2"' .. (ft == "c" and " -lm" or "") .. ' && "$2"',
+      cc
+        .. ' -g -O2 -Wall -Wextra -fsanitize=address,undefined "$1" -o "$2"'
+        .. (ft == "c" and " -lm" or "")
+        .. ' && "$2"',
       "sh",
       file,
       out,
