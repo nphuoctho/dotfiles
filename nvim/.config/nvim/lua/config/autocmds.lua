@@ -52,12 +52,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>cu", function()
       exec_cmd("typescript.removeUnusedImports")
     end, "Remove Unused Imports")
-    map("<leader>cA", function()
-      vim.lsp.buf.code_action({
-        apply = true,
-        context = { only = { "source.addMissingImports.ts" }, diagnostics = {} },
-      })
-    end, "Add Missing Imports")
     map("<leader>cT", function()
       exec_cmd("typescript.restartTsServer")
     end, "Restart tsserver")
@@ -65,7 +59,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- tsc (TS7 native LSP): no workspace/executeCommand and no refactor code actions, so rebind the
--- vtsls import helpers to LSP source actions (gD lives in lang-web.lua as a server key).
+-- vtsls import helpers to LSP source actions (gD, <leader>cA/cM/cD/cT live in lang-web.lua as server keys).
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("user_tsc_attach", { clear = true }),
   callback = function(args)
@@ -89,8 +83,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     map("<leader>ci", source_action("source.sortImports"), "Sort Imports")
     map("<leader>cu", source_action("source.removeUnusedImports"), "Remove Unused Imports")
-    -- source.addMissingImports.ts is not offered by tsc; fixAll adds the missing imports.
-    map("<leader>cA", source_action("source.fixAll"), "Add Missing Imports (fixAll)")
   end,
 })
 
@@ -114,10 +106,13 @@ do
   })
   vim.api.nvim_create_autocmd("InsertLeave", {
     group = group,
-    callback = function(args)
-      if vim.b[args.buf].inlay_hints_suspended then
-        vim.b[args.buf].inlay_hints_suspended = nil
-        vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    callback = function()
+      -- InsertLeave may fire in a different buffer than InsertEnter did; restore every suspended one.
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].inlay_hints_suspended then
+          vim.b[buf].inlay_hints_suspended = nil
+          vim.lsp.inlay_hint.enable(true, { bufnr = buf })
+        end
       end
     end,
   })

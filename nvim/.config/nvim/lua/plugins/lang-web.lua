@@ -2,6 +2,24 @@
 -- Settings for vtsls MUST be nested tables: nvim answers workspace/configuration by
 -- splitting the section on ".", so flat keys like ["typescript.format.enable"] are ignored.
 -- LazyVim's vtsls extra copies `typescript` settings to `javascript` already.
+-- tsc has no `source.addMissingImports`; the "Add all missing imports" quickfix needs the buffer's
+-- LSP diagnostics passed explicitly (`source.fixAll` would also generate method stubs).
+local function add_missing_imports()
+  local diagnostics = {}
+  for _, d in ipairs(vim.diagnostic.get(0)) do
+    if d.user_data and d.user_data.lsp then
+      table.insert(diagnostics, d.user_data.lsp)
+    end
+  end
+  vim.lsp.buf.code_action({
+    apply = true,
+    filter = function(action)
+      return action.title == "Add all missing imports"
+    end,
+    context = { only = { "quickfix" }, diagnostics = diagnostics },
+  })
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -36,6 +54,11 @@ return {
                 importModuleSpecifierEnding = "auto", -- nodenext => always ".js"
                 renameMatchingJsxTags = true,
                 useAliasesForRenames = false,
+                organizeImports = {
+                  caseSensitivity = "auto",
+                  typeOrder = "first",
+                  unicodeCollation = "ordinal",
+                },
               },
               suggest = {
                 autoImports = true,
@@ -89,6 +112,19 @@ return {
               end,
               desc = "Goto Source Definition",
             },
+            -- Keys must live here (not in an autocmd): LazyVim re-applies its generic <leader>cA
+            -- "Source Action" on every client attach, which clobbers buffer-local autocmd maps.
+            { "<leader>cA", add_missing_imports, desc = "Add Missing Imports", has = "codeAction" },
+            { "<leader>cM", add_missing_imports, desc = "Add Missing Imports", has = "codeAction" },
+            {
+              "<leader>cD",
+              function()
+                vim.lsp.buf.code_action({ apply = true, context = { only = { "source.fixAll" }, diagnostics = {} } })
+              end,
+              desc = "Fix All (may generate stubs)",
+              has = "codeAction",
+            },
+            { "<leader>cT", "<cmd>lsp restart tsc<cr>", desc = "Restart tsc" },
           },
           settings = {
             ["js/ts"] = {
@@ -105,6 +141,7 @@ return {
                 importModuleSpecifierEnding = "auto",
                 preferTypeOnlyAutoImports = false, -- NEVER true for NestJS DI (see vtsls block)
                 useAliasesForRenames = false,
+                organizeImports = { caseSensitivity = "auto", typeOrder = "first", unicodeCollation = "ordinal" },
               },
               suggest = {
                 autoImports = true,
@@ -124,7 +161,7 @@ return {
         tailwindcss = {
           root_dir = function(bufnr, on_dir)
             local fname = vim.api.nvim_buf_get_name(bufnr)
-            local markers = require("lspconfig.util").insert_package_json({
+            local config_files = {
               "tailwind.config.js",
               "tailwind.config.cjs",
               "tailwind.config.mjs",
@@ -133,10 +170,23 @@ return {
               "postcss.config.cjs",
               "postcss.config.mjs",
               "postcss.config.ts",
-            }, "tailwindcss", fname)
-            local found = vim.fs.find(markers, { path = fname, upward = true })[1]
-            if found then
-              on_dir(vim.fs.dirname(found))
+            }
+            -- Walk every ancestor: Tailwind v4 has no config file and in a pnpm monorepo
+            -- `tailwindcss` may be declared only in the root package.json.
+            for dir in vim.fs.parents(fname) do
+              for _, name in ipairs(config_files) do
+                if vim.uv.fs_stat(vim.fs.joinpath(dir, name)) then
+                  return on_dir(dir)
+                end
+              end
+              local pkg = vim.fs.joinpath(dir, "package.json")
+              if vim.uv.fs_stat(pkg) then
+                for line in io.lines(pkg) do
+                  if line:find("tailwindcss", 1, true) then
+                    return on_dir(dir)
+                  end
+                end
+              end
             end
           end,
         },
@@ -147,7 +197,6 @@ return {
           settings = {
             typeAware = false,
             fixKind = "safe_fix",
-            run = "onSave",
           },
         },
       },
@@ -197,6 +246,11 @@ return {
       opts.formatters = opts.formatters or {}
       opts.formatters.oxfmt = vim.tbl_deep_extend("force", opts.formatters.oxfmt or {}, {
         condition = function(_, ctx)
+          -- svelte/astro have no prettier entry in LazyVim's extra; keep oxfmt for them as before.
+          local ft = vim.bo[ctx.buf].filetype
+          if ft == "svelte" or ft == "astro" then
+            return true
+          end
           return vim.fs.root(ctx.filename, { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts", "oxfmt.config.mts" })
             ~= nil
         end,
