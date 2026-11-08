@@ -29,7 +29,7 @@ return {
       -- ─── Completion behavior ──────────────────────────────────────────────
       completion = {
         trigger = {
-          show_in_snippet = false, -- no popup while inside a snippet placeholder
+          show_in_snippet = true, -- vtsls completeFunctionCalls puts the cursor in a snippet placeholder after accept
         },
 
         list = {
