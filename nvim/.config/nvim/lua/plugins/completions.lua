@@ -15,7 +15,7 @@ return {
         ["<C-u>"] = { "scroll_documentation_up" },
 
         -- Snippet jump
-        ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
+        ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" }, -- item 1 is preselected, so Tab accepts instead of skipping to item 2
         ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
 
         -- Navigate items
@@ -34,7 +34,7 @@ return {
 
         list = {
           selection = {
-            preselect = false, -- true made Tab skip item 1 and Enter insert it instead of a newline
+            preselect = true, -- auto-select first item; <C-j>/<C-k> navigate, <Tab>/<CR> accept
             auto_insert = false, -- wait for <CR> to insert
           },
         },
