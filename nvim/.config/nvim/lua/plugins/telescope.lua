@@ -18,7 +18,6 @@ return {
 
       opts.defaults.file_ignore_patterns = vim.list_extend(opts.defaults.file_ignore_patterns or {}, {
         "node_modules/.*",
-        ".venv/.*",
         "%.git/.*",
         "^build/",
         "^dist/",
