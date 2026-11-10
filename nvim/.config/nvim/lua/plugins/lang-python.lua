@@ -1,4 +1,34 @@
+-- Readable venv-selector entries: drop "/bin/python", abbreviate $HOME, and show
+-- "<project>/<venv>" for project-local venvs. Display only; the real path is untouched.
+local project_sources = { workspace = true, cwd = true, file = true }
+
+local function format_venv(line, source)
+  if type(line) ~= "string" then
+    return line
+  end
+  local dir = line:match("^(.+)/bin/python[%d.]*$") or line:match("^(.+)\\Scripts\\python%.exe$")
+  if not dir then
+    return line
+  end
+  if project_sources[source] then
+    local project, venv = dir:match("([^/]+)/([^/]+)$")
+    if project then
+      return project .. "/" .. venv
+    end
+  end
+  local home = vim.env.HOME
+  if home and home ~= "" and dir:sub(1, #home + 1) == home .. "/" then
+    dir = "~" .. dir:sub(#home + 1)
+  end
+  return dir
+end
+
 return {
+  {
+    "linux-cultist/venv-selector.nvim",
+    opts = { options = { on_telescope_result_callback = format_venv } },
+  },
+
   {
     "neovim/nvim-lspconfig",
     opts = {
