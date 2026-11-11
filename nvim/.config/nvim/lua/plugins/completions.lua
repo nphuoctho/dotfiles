@@ -15,8 +15,8 @@ return {
         ["<C-u>"] = { "scroll_documentation_up" },
 
         -- Snippet jump
-        ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" }, -- item 1 is preselected, so Tab accepts instead of skipping to item 2
-        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
+        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" }, -- popup open: next item; popup closed: jump snippet placeholder
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
 
         -- Navigate items
         ["<C-j>"] = { "select_next", "fallback" },
@@ -34,7 +34,7 @@ return {
 
         list = {
           selection = {
-            preselect = true, -- auto-select first item; <C-j>/<C-k> navigate, <Tab>/<CR> accept
+            preselect = true, -- auto-select first item; <CR> accepts it; <Tab>/<S-Tab>/<C-j>/<C-k> navigate
             auto_insert = false, -- wait for <CR> to insert
           },
         },
